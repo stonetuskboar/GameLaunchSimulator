@@ -1,0 +1,63 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f54bd5a4e6e426647abda455551dab69, type: 3}
+  m_Name: FileData
+  m_EditorClassIdentifier: 
+  fileDataList:
+  - fileId: 0
+    fileSprite: {fileID: 21300000, guid: 01c3598287061064ea8761868aaba8ff, type: 3}
+    fileName: vcomp100.dll
+    fileSize: 7.54MB
+  - fileId: 1
+    fileSprite: {fileID: 21300000, guid: 8ab2f3db0cb168f4ca4b0ea0a8c84887, type: 3}
+    fileName: NVCleanstall.exe
+    fileSize: 10.13MB
+  - fileId: 2
+    fileSprite: {fileID: 21300000, guid: 8ab2f3db0cb168f4ca4b0ea0a8c84887, type: 3}
+    fileName: k42j.exe
+    fileSize: 40.23MB
+  - fileId: 3
+    fileSprite: {fileID: 21300000, guid: 01c3598287061064ea8761868aaba8ff, type: 3}
+    fileName: WipReference.dll
+    fileSize: 975.6KB
+  - fileId: 4
+    fileSprite: {fileID: 21300000, guid: 01c3598287061064ea8761868aaba8ff, type: 3}
+    fileName: CTRice.dll
+    fileSize: 455.2KB
+  - fileId: 5
+    fileSprite: {fileID: 21300000, guid: 01c3598287061064ea8761868aaba8ff, type: 3}
+    fileName: vcomp110.dll
+    fileSize: 428.9KB
+  - fileId: 6
+    fileSprite: {fileID: 21300000, guid: 01c3598287061064ea8761868aaba8ff, type: 3}
+    fileName: jhn0uhbo.dll
+    fileSize: 1.23MB
+  - fileId: 7
+    fileSprite: {fileID: 21300000, guid: 01c3598287061064ea8761868aaba8ff, type: 3}
+    fileName: mfc140.dll
+    fileSize: 4.28MB
+  - fileId: 8
+    fileSprite: {fileID: 21300000, guid: 01c3598287061064ea8761868aaba8ff, type: 3}
+    fileName: D3D12.dll
+    fileSize: 7.26MB
+  - fileId: 9
+    fileSprite: {fileID: 21300000, guid: 01c3598287061064ea8761868aaba8ff, type: 3}
+    fileName: sqlite3.dll
+    fileSize: 41.86MB
+  - fileId: 10
+    fileSprite: {fileID: 21300000, guid: 01c3598287061064ea8761868aaba8ff, type: 3}
+    fileName: gdiplus.dll
+    fileSize: 953.2KB
+  - fileId: 11
+    fileSprite: {fileID: 21300000, guid: 01c3598287061064ea8761868aaba8ff, type: 3}
+    fileName: AdbWinApi.dll
+    fileSize: 654.1KB
