@@ -8,8 +8,9 @@ public class MessageSo : ScriptableObject
 {
     public List<FriendData> friendsList;
     public FriendData PlayerData;
-    public List<MessageSegment> messagesList;
 
+    public List<MessageSegment> messageSegmentList;
+    public List<MessageData> messageList;
 
 
     public FriendData GetFriendById(int id)
@@ -28,19 +29,34 @@ public class MessageSo : ScriptableObject
         }
         return null;
     }
-
-    public MessageSegment GetSegmentById( int id)
+    public MessageData GetMessageById(int id)
     {
-        if (messagesList[id].SegmentId == id)
+        if (messageList[id].messageId == id)
         {
-            return messagesList[id];
+            return messageList[id];
         }
 
-        for (int i = 0; i < messagesList.Count; i++)
+        for (int i = 0; i < messageList.Count; i++)
         {
-            if (messagesList[i].SegmentId == id)
+            if (messageList[i].messageId == id)
             {
-                return messagesList[i];
+                return messageList[i];
+            }
+        }
+        return null;
+    }
+    public MessageSegment GetSegmentById( int id)
+    {
+        if (messageSegmentList[id].SegmentId == id)
+        {
+            return messageSegmentList[id];
+        }
+
+        for (int i = 0; i < messageSegmentList.Count; i++)
+        {
+            if (messageSegmentList[i].SegmentId == id)
+            {
+                return messageSegmentList[i];
             }
         }
         return null;
@@ -59,7 +75,9 @@ public class FriendData
 [Serializable]
 public class MessageData
 {
+    public int messageId;
     public bool IsSend = false;// true == 你发的消息。 false= 对方发的消息。
+    [TextArea(1, 4)]
     public string text = "";
 }
 
@@ -68,5 +86,12 @@ public class MessageSegment
 {
     public int SegmentId = -1;
     public int FriendId = -1;//-1是不存在。
-    public List<MessageData> messages;
+    public List<int> messageIdList;
+}
+
+[Serializable]
+public class FriendSaveData
+{
+    public int FriendId = -1; //-1是不存在。
+    public List<int> messagesId;
 }

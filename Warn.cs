@@ -14,21 +14,28 @@ public class Warn : MonoBehaviour
 
     public void Awake()
     {
-        Unshow();
+        UnShowWarn();
     }
 
-    public void Unshow()
+    public void UnShowWarn()
     {
+        Debug.Log("unshow");
         gameObject.SetActive(false);
     }
-    public void Show()
+    public void ShowWarn()
     {
+        Debug.Log("show");
         gameObject.SetActive(true);
     }
-    public void Init(Sprite app, string appStr)
+    public void Init(Sprite appSprite, string appStr)
     {
-        appIcon.sprite = app;
+        appIcon.sprite = appSprite;
         appName.text = appStr;
+    }
+    public void Init(Application app)
+    {
+        appIcon.sprite = app.iconImage.sprite;
+        appName.text = app.GetTitleWithoutNewLine();
     }
     public void SetWarn(WarnData data)
     {

@@ -84,5 +84,6 @@ public class PostData
 public class ReplyData
 {
     public Sprite avatar;
+    [TextArea(1, 6)]
     public string replyText;
 }

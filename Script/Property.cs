@@ -12,8 +12,9 @@ public class Property : LayeredCanvas
     private Application nowApplication = null;
     public Image iconImage;
     public TextMeshProUGUI titleText;
-    public GameObject propertyObject;
+    public RectTransform rectTrans; //用来在拖动窗口时移动
 
+    [Header("设置属性")]
     public PropertySetting setting;
     public Toggle CompToggle;
     public TMP_Dropdown ComDropDown;
@@ -24,17 +25,61 @@ public class Property : LayeredCanvas
     public Toggle RunByAdminToggle;
     public Toggle ReResgisterToggle;
     public Toggle ICCModeToggle;
+    [Header("底部按键")]
+    public Button DecideButton;
+    public Button CancelButton;
+    public Button ApplyButton;
+
+    public override void Awake()
+    {
+        base.Awake();
+        DecideButton.onClick.AddListener(ApplySettingThenUnShow);
+        CancelButton.onClick.AddListener(UnShow);
+        ApplyButton.onClick.AddListener (SaveSetting);
+
+        CompToggle.onValueChanged.AddListener(OnBoolChanged);
+        ComDropDown.onValueChanged.AddListener(OnIntChanged);
+        ColorModeToggle.onValueChanged.AddListener(OnBoolChanged);
+        ColorModeDropDown.onValueChanged.AddListener(OnIntChanged);
+        lowResolutionToggle.onValueChanged.AddListener(OnBoolChanged);
+        fullScreenOptimToggle.onValueChanged.AddListener(OnBoolChanged);
+        RunByAdminToggle.onValueChanged.AddListener(OnBoolChanged); 
+        ReResgisterToggle.onValueChanged.AddListener(OnBoolChanged); 
+        ICCModeToggle.onValueChanged.AddListener(OnBoolChanged); 
+    }
     public void Init(DesktopManager manager)
     {
         deskManager = manager;
     }
+
+    public override void Show()
+    {
+        base.Show();
+        ApplyButton.interactable = false;
+    }
+
     public void SetProperty(Application app)
     {
         nowApplication = app;
         iconImage.sprite = app.iconImage.sprite;
-        titleText.text = app.GetTitleWithoutNewLine();
+        titleText.text = app.GetTitleWithoutNewLine() +" 属性";
+        ImportSetting(app.proertySetting);
     }
 
+    public void ImportSetting(PropertySetting importSetting)
+    {
+        CompToggle.isOn = importSetting.IsCompatibility;
+        ComDropDown.value = (int)importSetting.compatMode;
+        ColorModeToggle.isOn = importSetting.IsColorMode;
+        ColorModeDropDown.value = (int)importSetting.colorMode;
+        lowResolutionToggle.isOn = importSetting.IsLowResolution;
+        fullScreenOptimToggle.isOn = importSetting.IsfullScreenOptim;
+        RunByAdminToggle.isOn = importSetting.IsRunByAdmin;
+        ReResgisterToggle.isOn = importSetting.IsReResgister;
+        ICCModeToggle.isOn = importSetting.IsIccMode;
+        setting = importSetting;
+        ApplyButton.interactable = false;
+    }
     public void SaveSetting()
     {
         setting.IsCompatibility = CompToggle.isOn;
@@ -54,6 +99,7 @@ public class Property : LayeredCanvas
         {
             nowApplication.proertySetting = setting;
         }
+        ApplyButton.interactable = false;
     }
 
     public void ApplySettingThenUnShow()
@@ -61,10 +107,22 @@ public class Property : LayeredCanvas
         SaveSetting();
         UnShow();
     }
+    public void OnBoolChanged(bool unUsedValue)
+    {
+        OnAnyValueChanged();
+    }
+    public void OnIntChanged(int unUsedValue)
+    {
+        OnAnyValueChanged();
+    }
+    public void OnAnyValueChanged()
+    {
+        ApplyButton.interactable = true;
+    }
 }
 
 [Serializable]
-public struct PropertySetting
+public class PropertySetting
 {
     public bool IsCompatibility;
     public CompatibilityMode compatMode;

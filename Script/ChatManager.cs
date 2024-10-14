@@ -7,53 +7,66 @@ public class ChatManager : MonoBehaviour
     public ChatController ChatController;
     public MessageSo messageSo;
 
-    public int NextSegmentId = 0;
-
-    public void Start()
+    public void Awake()
     {
         ChatController.Init(messageSo);
-        ShowChat();
-        StartShowMessageSegment();
     }
 
     public void ShowChat()
     {
         ChatController.Show();
     }
-
-    public void StartShowMessageSegment()
+    public void LoadData()
     {
-        StartCoroutine(ShowMessageSegment());
+
+    }
+    public void StartShowMessageSegment(int segmentId)
+    {
+        StartCoroutine(ShowMessageSegment(segmentId, VoidDelegate));
     }
 
-    IEnumerator ShowMessageSegment()
+    public void VoidDelegate()
     {
-        MessageSegment segment = messageSo.GetSegmentById(NextSegmentId);
+        //没有回调
+    }
+
+    public void StartShowMessageSegment(int segmentId, BasicDelegate callBack)
+    {
+        StartCoroutine(ShowMessageSegment(segmentId,callBack));
+    }
+
+    IEnumerator ShowMessageSegment(int segmentId, BasicDelegate callBack)
+    {
+        MessageSegment segment = messageSo.GetSegmentById(segmentId);
         if(segment == null)
         {
             yield break;
         }
-        int friendId = segment.FriendId;
-        ChatController.IfNewAddFriend(friendId);
-        ChatController.ChangeChatToFriend(friendId);
-        List <MessageData> messages = segment.messages;
-        if(messages.Count > 0)
-        {
-            ChatController.ShowMessage(messages[0], friendId);
-        }
-        for (int i = 1; i <segment.messages.Count; i++)
-        {
-            float basicLength = Mathf.Sqrt(messages[i].text.Length / 4f) + Mathf.Sqrt(messages[i-1].text.Length / 4f) /2;
-            float waitTime = basicLength * Random.Range(0.5f,1.5f);
-            float time = 0f;
+        ChatController.IfNewAddFriend(segment.FriendId);
+        FriendObject friend = ChatController.SwitchChatToFriend(segment.FriendId);
+        List<int> messages = segment.messageIdList;
 
-            while (time < waitTime)
+        if (messages.Count > 0)
+        {
+            MessageData data0;
+            MessageData data1 = messageSo.GetMessageById(messages[0]);
+            ChatController.AddMessage(data1, friend);
+            for (int i = 1; i < messages.Count; i++)
             {
-                yield return null;
-                time += Time.deltaTime;
+                data0 = data1;
+                data1 = messageSo.GetMessageById(messages[i]);
+                float basicLength = Mathf.Sqrt(data1.text.Length / 8f + data0.text.Length / 16f);
+                float waitTime = basicLength * Random.Range(0.5f, 1.5f);
+                float time = 0f;
+                while (time < waitTime)
+                {
+                    yield return null;
+                    time += Time.deltaTime;
+                }
+                ChatController.AddMessage(data1, friend);
             }
-            ChatController.ShowMessage(messages[i], friendId);
         }
-        NextSegmentId++;
+
+        callBack?.Invoke();
     }
 }

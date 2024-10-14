@@ -6,11 +6,10 @@ using UnityEngine.UI;
 
 public class DesktopManager : MonoBehaviour
 {
+    [Header("右键菜单及属性管理")]
     public RectTransform DesktopIconsRectTrans;
-    public RectTransform ClickMenuRectTrans;
-    private ClickMenu clickMenu;
-    public RectTransform PropertyRectTrans;
-    private Property property;
+    public ClickMenu clickMenu;
+    public Property property;
     public ExplorerManager explorerManager;
     public ChatManager chatManager;
     private Application nowClickTarget = null;
@@ -18,21 +17,18 @@ public class DesktopManager : MonoBehaviour
     private float clickLeftTime = 0;
     public float doubleClickTime = 0.5f;
     public static Vector3 safetyEdge = new Vector3(60,48,0);
+    [Header("桌面应用管理")] //这里就不做对象池了，只有每关开头和结尾才会增加和删除应用，所以没有消耗性能的考虑
+    public GameObject ApplicationPrefab;
+    public ApplicationSo appSo;
     public List<Application> applications = new List<Application>();
 
     public void Awake() //这些引用都在awake之前。
     {
-        ClickMenuRectTrans.gameObject.SetActive(false);
-        clickMenu = ClickMenuRectTrans.GetComponent<ClickMenu>();
         clickMenu.Init(this);
         clickMenu.openPropertyButton.onClick.AddListener(ShowProperty);
         clickMenu.launchButton.onClick.AddListener(LaunchTarget);
-        property = PropertyRectTrans.GetComponent<Property>();
         property.Init(this);
-        for (int i = 0; i < applications.Count; i++)
-        {
-            applications[i].Init(this);
-        }
+        //App数据由levelManager控制
     }
 
 
@@ -51,11 +47,71 @@ public class DesktopManager : MonoBehaviour
         }
     }
 
+    public Application IfNoExistAddApp(int id)
+    {
+        for(int i = 0; i < applications.Count; i ++)
+        {
+            if (applications[i].appId == id)
+            {
+                return null;
+            }
+        }
+        return CreateAnApplication(id);
+    }
+    public void IfExistDeleteApp(int id)
+    {
+        for (int i = 0; i < applications.Count; i++)
+        {
+            if (applications[i].appId == id)
+            {
+                applications.RemoveAt(i);
+                return;
+            }
+        }
+    }
+    public void IfExistDeleteApp(Application app)
+    {
+        applications.Remove(app);
+    }
+    public Application GetApplicationById(int id)
+    {
+        if (applications.Count > id)
+        {
+            if (applications[id].appId == id)
+            {
+                return applications[id];
+            }
+        }
+
+        for (int i = 0; i < applications.Count; i++)
+        {
+            if (applications[i].appId == id)
+            {
+                return applications[i];
+            }
+        }
+        return null;
+    }
+
+    public Application CreateAnApplication(int id)
+    {
+        AppData data = appSo.GetAppDataById(id);
+        GameObject obj = Instantiate(ApplicationPrefab,DesktopIconsRectTrans);
+        Application app = obj.GetComponent<Application>();
+        if(app != null)
+        {
+            app.Init(this,data);
+            applications.Add(app);
+        }
+        return app;
+    }
+
+
     public void OnLeftClick(Application clickTarget)
     {
         if(nowClickTarget == clickTarget) //双击了
         {
-            clickTarget.OnLaunchClick();
+            clickTarget.OnLaunchInvoke();
             StopDoubleClickCheck();
         }
         else
@@ -75,20 +131,20 @@ public class DesktopManager : MonoBehaviour
         ChoosenTarget = clickTarget;
         Vector3 TargetPosition = Camera.main.ScreenToWorldPoint((Vector3)Pointer.current.position.ReadValue());
         TargetPosition.z = 0;
-        ClickMenuRectTrans.position = TargetPosition;
-        FullyShowAdjust(ClickMenuRectTrans);
-        ClickMenuRectTrans.gameObject.SetActive(true);
+        clickMenu.rectTrans.position = TargetPosition;
+        FullyShowAdjust(clickMenu.rectTrans);
+        clickMenu.gameObject.SetActive(true);
     }
 
     public void CloseClickMenu()
     {
-        ClickMenuRectTrans.gameObject.SetActive(false);
+        clickMenu.gameObject.SetActive(false);
     }
     public void LaunchTarget()
     {
         if(ChoosenTarget != null)
         {
-           ChoosenTarget.OnLaunchClick();
+           ChoosenTarget.OnLaunchInvoke();
         }
         CloseClickMenu();
     }
@@ -98,8 +154,8 @@ public class DesktopManager : MonoBehaviour
         property.SetProperty(ChoosenTarget);
         Vector3 TargetPosition = Camera.main.ScreenToWorldPoint((Vector3)Pointer.current.position.ReadValue());
         TargetPosition.z = 0;
-        PropertyRectTrans.position = TargetPosition;
-        FullyShowAdjust(PropertyRectTrans);
+        property.rectTrans.position = TargetPosition;
+        FullyShowAdjust(property.rectTrans);
         property.Show();
     }
 
