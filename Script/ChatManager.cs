@@ -56,7 +56,7 @@ public class ChatManager : MonoBehaviour
                 data0 = data1;
                 data1 = messageSo.GetMessageById(messages[i]);
                 float basicLength = Mathf.Sqrt(data1.text.Length / 8f + data0.text.Length / 16f);
-                float waitTime = basicLength * Random.Range(0.5f, 1.5f);
+                float waitTime = basicLength * Random.Range(0.7f, 1.3f);
                 float time = 0f;
                 while (time < waitTime)
                 {

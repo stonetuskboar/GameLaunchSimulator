@@ -12,9 +12,7 @@ public class DesktopManager : MonoBehaviour
     public Property property;
     public ExplorerManager explorerManager;
     public ChatManager chatManager;
-    private Application nowClickTarget = null;
     private Application ChoosenTarget = null;
-    private float clickLeftTime = 0;
     public float doubleClickTime = 0.5f;
     public static Vector3 safetyEdge = new Vector3(60,48,0);
     [Header("桌面应用管理")] //这里就不做对象池了，只有每关开头和结尾才会增加和删除应用，所以没有消耗性能的考虑
@@ -29,22 +27,6 @@ public class DesktopManager : MonoBehaviour
         clickMenu.launchButton.onClick.AddListener(LaunchTarget);
         property.Init(this);
         //App数据由levelManager控制
-    }
-
-
-    public void Update()
-    {
-        if (nowClickTarget != null)
-        {
-            if(clickLeftTime > 0)
-            {
-                clickLeftTime -= Time.deltaTime;
-            }
-            else
-            {
-                ShowClickMenu(nowClickTarget);
-            }
-        }
     }
 
     public Application IfNoExistAddApp(int id)
@@ -107,27 +89,10 @@ public class DesktopManager : MonoBehaviour
     }
 
 
-    public void OnLeftClick(Application clickTarget)
-    {
-        if(nowClickTarget == clickTarget) //双击了
-        {
-            clickTarget.OnLaunchInvoke();
-            StopDoubleClickCheck();
-        }
-        else
-        {
-            nowClickTarget = clickTarget;
-            clickLeftTime = doubleClickTime;
-        }
-    }
-    public void StopDoubleClickCheck()
-    {
-        nowClickTarget = null;
-    }
+
 
     public void ShowClickMenu(Application clickTarget)
     {
-        StopDoubleClickCheck();
         ChoosenTarget = clickTarget;
         Vector3 TargetPosition = Camera.main.ScreenToWorldPoint((Vector3)Pointer.current.position.ReadValue());
         TargetPosition.z = 0;
@@ -148,10 +113,15 @@ public class DesktopManager : MonoBehaviour
         }
         CloseClickMenu();
     }
+
     public void ShowProperty()
     {
+        ShowProperty(ChoosenTarget);
+    }
+    public void ShowProperty(Application appTarget)
+    {
         CloseClickMenu();
-        property.SetProperty(ChoosenTarget);
+        property.SetProperty(appTarget);
         Vector3 TargetPosition = Camera.main.ScreenToWorldPoint((Vector3)Pointer.current.position.ReadValue());
         TargetPosition.z = 0;
         property.rectTrans.position = TargetPosition;

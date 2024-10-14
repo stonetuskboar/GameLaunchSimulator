@@ -12,19 +12,13 @@ public class Warn : MonoBehaviour
     public Image warnIcon;
     public Button button;
 
-    public void Awake()
-    {
-        UnShowWarn();
-    }
 
     public void UnShowWarn()
     {
-        Debug.Log("unshow");
         gameObject.SetActive(false);
     }
     public void ShowWarn()
     {
-        Debug.Log("show");
         gameObject.SetActive(true);
     }
     public void Init(Sprite appSprite, string appStr)

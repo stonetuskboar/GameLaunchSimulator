@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class DraggableUI : MonoBehaviour, IDragHandler, IEndDragHandler
 {
@@ -10,6 +11,14 @@ public class DraggableUI : MonoBehaviour, IDragHandler, IEndDragHandler
     public UIAdjustType AdjustType = UIAdjustType.fullyDraggable;
     public void Start()
     {
+        Image image = GetComponent<Image>();
+        if(image != null)
+        {
+            if(image.mainTexture.isReadable == true )
+            {
+                image.alphaHitTestMinimumThreshold = 0.1f;
+            }
+        }
         draggableRectTrans = GetComponent<RectTransform>();
         DesktopManager.FullyShowAdjust(DragTargetRectTransform, DragTargetRectTransform);
     }

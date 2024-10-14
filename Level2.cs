@@ -36,15 +36,15 @@ public class Level2 : BasicLevel
 
     IEnumerator ShowBlackScreen()
     {
+        blackScreenCanvas.enabled = true;
         CameraController controller = levelManager.cameraController;
         canvas.enabled = true;
         controller.MultiSizeFixedLeftTop(0.5f);
-
-        yield return new WaitForSeconds(0.3f);
-        gameImage.enabled = true;
+        yield return new WaitForSeconds(0.5f);
 
         if (CheckLevelSuccess() == false)
         {
+            gameImage.enabled = true;
             yield return new WaitForSeconds(0.7f);
             gameImage.enabled = false;
             yield return new WaitForSeconds(0.3f);
@@ -55,19 +55,27 @@ public class Level2 : BasicLevel
             controller.MultiSizeFixedLeftTop(2f);
 
             yield return new WaitForSeconds(0.5f);
-
-            Color color = BlackScreenImage.color;
-            color.a = 1f;
-            BlackScreenImage.color = color;
-
+            BlackScreenImage.enabled = true;
             yield return new WaitForSeconds(0.5f);
-            warn.SetWarn(warnSo.WarnDatas[2]);
             warn.ShowWarn();
         }
         else
         {
             controller.BackToOgSizeWhenFixedLeftTop();
+            gameImage.enabled = true;
             yield return new WaitForSeconds(1f);
+            Color color = successImage.color;
+            color.a = 0f;
+            successImage.color = color;
+            successImage.enabled = true;
+            float time = 0f;
+            while(time < 2f)
+            {
+                time += Time.deltaTime;
+                color.a = time / 1f;
+                successImage.color = color;
+                yield return null;
+            }
             completePlate.StartAppear();
         }
     }
@@ -79,15 +87,12 @@ public class Level2 : BasicLevel
 
     public void Reset()
     {
-        Debug.Log("reset");
         warn.UnShowWarn();
         successImage.enabled = false;
         gameImage.enabled = false;
         canvas.enabled = false;
         blackScreenCanvas.enabled = false;
-        Color color = BlackScreenImage.color;
-        color.a = 0f;
-        BlackScreenImage.color = color;
+        BlackScreenImage.enabled = false;
     }
     public override void OnCompleteLevel()
     {
@@ -96,14 +101,19 @@ public class Level2 : BasicLevel
     public bool CheckLevelSuccess()
     {
         PropertySetting setting = GetFirstApp().proertySetting;
-        if (setting.IsCompatibility == CorrectSetting.IsCompatibility
-            && setting.compatMode == CorrectSetting.compatMode)
+        if (setting.IsCompatibility != CorrectSetting.IsCompatibility
+            || setting.compatMode != CorrectSetting.compatMode)
         {
-            return true;
-        }
-        else
-        {
+            warn.SetWarn(warnSo.WarnDatas[3]);
             return false;
+        }
+        else if( setting.IsfullScreenOptim != false)
+        {
+            warn.SetWarn(warnSo.WarnDatas[2]);
+            return false;
+        }
+        else {
+            return true;
         }
 
     }

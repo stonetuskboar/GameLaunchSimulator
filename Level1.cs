@@ -14,6 +14,7 @@ public class Level1 : BasicLevel
     public override void Awake()
     {
         base.Awake();
+        warn.UnShowWarn();
         warn.button.onClick.AddListener(Quit);
         successImage.enabled = false;
         canvas.enabled = false;
@@ -57,7 +58,6 @@ public class Level1 : BasicLevel
             yield return new WaitForSeconds(0.2f);
             blackScreen.color = og;
             yield return new WaitForSeconds(1f);
-            warn.SetWarn(warnSo.WarnDatas[1]);
             warn.ShowWarn();
         }
         else
@@ -91,6 +91,7 @@ public class Level1 : BasicLevel
         }
         else
         {
+            warn.SetWarn(warnSo.WarnDatas[1]);
             return false;
         }
     }
