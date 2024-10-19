@@ -25,6 +25,8 @@ public class Property : LayeredCanvas
     public Toggle RunByAdminToggle;
     public Toggle ReResgisterToggle;
     public Toggle ICCModeToggle;
+    public List<TextMeshProUGUI> textList = new();
+    public List<string> textStringList = new();
     [Header("µ×²¿°´¼ü")]
     public Button DecideButton;
     public Button CancelButton;
@@ -46,6 +48,11 @@ public class Property : LayeredCanvas
         RunByAdminToggle.onValueChanged.AddListener(OnBoolChanged); 
         ReResgisterToggle.onValueChanged.AddListener(OnBoolChanged); 
         ICCModeToggle.onValueChanged.AddListener(OnBoolChanged); 
+
+        for(int i = 0; i < textList.Count; i++)
+        {
+            textList[i].text = textStringList[i];
+        }
     }
     public void Init(DesktopManager manager)
     {
@@ -139,7 +146,6 @@ public class PropertySetting
 
 public enum CompatibilityMode
 {
-    No = -1,
     windos95 = 0,
     windos97 = 1,
     windosXP = 2,
@@ -151,7 +157,6 @@ public enum CompatibilityMode
 }
 public enum ColorMode
 {
-    No = -1,
     _8Bit = 0,
     _16Bit = 1,
 }

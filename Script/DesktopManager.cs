@@ -237,5 +237,34 @@ public class DesktopManager : MonoBehaviour
         }
         moveRect.position += diff;
     }
+
+    public static Vector3 GetRectBottomLeftPosition(RectTransform rectrans)
+    {
+        Vector3 bottomLeftDiff = new Vector3(rectrans.rect.x, rectrans.rect.y, 0); //必须将canvas scale 设置为1，1，1，不然要加转换
+        Vector3 bottomLeftPosition = rectrans.position + bottomLeftDiff;
+        return bottomLeftPosition;
+    }
+    public static Vector3 GetRectBottomRightPosition(RectTransform rectrans)
+    {
+        //Vector3 bottomLeftDiff = new Vector3(rectrans.rect.x, rectrans.rect.y, 0); //必须将canvas scale 设置为1，1，1，不然要加转换
+        //Vector3 topRightDiff = new Vector3(rectrans.rect.xMax, rectrans.rect.yMax, 0);
+        Vector3 bottomLeftPosition = rectrans.position + new Vector3(rectrans.rect.xMax, rectrans.rect.y,0);
+        return bottomLeftPosition;
+    }
+
+    public static Vector3 GetRectTopLeftPosition(RectTransform rectrans)
+    {
+        //Vector3 bottomLeftDiff = new Vector3(rectrans.rect.x, rectrans.rect.y, 0); //必须将canvas scale 设置为1，1，1，不然要加转换
+        //Vector3 topRightDiff = new Vector3(rectrans.rect.xMax, rectrans.rect.yMax, 0);
+        Vector3 bottomLeftPosition = rectrans.position + new Vector3(rectrans.rect.x, rectrans.rect.yMax,0);
+        return bottomLeftPosition;
+    }
+    public static Vector3 GetRectTopRightPosition(RectTransform rectrans)
+    {
+        //Vector3 bottomLeftDiff = new Vector3(rectrans.rect.x, rectrans.rect.y, 0); //必须将canvas scale 设置为1，1，1，不然要加转换
+        //Vector3 topRightDiff = new Vector3(rectrans.rect.xMax, rectrans.rect.yMax, 0);
+        Vector3 bottomLeftPosition = rectrans.position + new Vector3(rectrans.rect.xMax, rectrans.rect.yMax, 0);
+        return bottomLeftPosition;
+    }
 }
 

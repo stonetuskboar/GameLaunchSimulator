@@ -60,11 +60,11 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_VertexColorAlwaysGammaSpace: 1
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: -200039495
-  m_SortingOrder: 2
+  m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!114 &5180766091979739734
 MonoBehaviour:
@@ -156,6 +156,17 @@ MonoBehaviour:
   canvas: {fileID: 6755710147705821971}
   ApplistId: 03000000
   completePlate: {fileID: 3384807755772103235}
+  contentIcons:
+  - sprite: {fileID: 21300000, guid: 0d947a2f2603cce488d88643201bb9c0, type: 3}
+    color: {r: 0, g: 0.9529412, b: 1, a: 1}
+  - sprite: {fileID: 21300000, guid: ae1c921879107b747a4f539dc961b73f, type: 3}
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - sprite: {fileID: 21300000, guid: 0d308c8b2ebce2647856b4139c0122af, type: 3}
+    color: {r: 1, g: 0.6509804, b: 0.09019608, a: 1}
+  - sprite: {fileID: 21300000, guid: a28bde7e4c60f444b97723c0ef481423, type: 3}
+    color: {r: 0.3372549, g: 0.36078432, b: 0.11372549, a: 1}
+  - sprite: {fileID: 21300000, guid: 68f1955d01c259e4cb643c90aaf4fd8f, type: 3}
+    color: {r: 0.7647059, g: 0.6, b: 0, a: 1}
   BlackScreenImage: {fileID: 7450646152725878904}
   gameImage: {fileID: 2676124198212798230}
   successImage: {fileID: 3076134439580820713}
@@ -538,7 +549,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_VertexColorAlwaysGammaSpace: 1
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 1614742613

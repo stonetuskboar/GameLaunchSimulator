@@ -18,14 +18,16 @@ public class ExplorerController : LayeredCanvas
         base.Start();
     }
 
-    public void OpenNewPage(WebPageData data)
+    public WebPage OpenNewPage(WebPageData data)
     {
         GameObject obj = Instantiate(data.PageObject, WebPageTransform);
         WebPage page = new WebPage(data);
         page.pageCanvasGroup = obj.GetComponent<CanvasGroup>();
+        page.gameObject = obj;
         page.title = CreateTitle(data.titleText, data.pageId);
         existWebpages.Add(page);
         SwitchPageById(data.pageId);
+        return page;
     }
     public Title CreateTitle(string text, int id)
     {
@@ -55,6 +57,42 @@ public class ExplorerController : LayeredCanvas
         }
     }
 
+    public void HideExplorerPageById(List<int> unHidePageIds)
+    {
+        for(int i = 0;i < existWebpages.Count;i++)
+        {
+            if (true == unHidePageIds.Contains(existWebpages[i].pageId))
+            {
+                existWebpages[i].UnHide();
+            }
+            else
+            {
+                existWebpages[i].Hide();
+            }
+        }
+    }
+
+    public WebPage FindPageById(int id)
+    {
+        for(int i = 0;i < existWebpages.Count;i++)
+        {
+            if (existWebpages[i].pageId == id)
+            {
+                return existWebpages[i];
+            }
+        }
+        return null;
+    }
+
+    public void ClearExplorer()
+    {
+        urlText.text = "";
+        for(int i = 0;i < existWebpages.Count;i++)
+        {
+            existWebpages[i].Clear();
+            existWebpages.RemoveAt(i);
+        }
+    }
 }
 [Serializable]
 public class WebPage
@@ -64,6 +102,7 @@ public class WebPage
     public string url;
     public string titleText;
     public CanvasGroup pageCanvasGroup;
+    public GameObject gameObject;
     public WebPage(WebPageData data)
     {
         pageId = data.pageId;
@@ -79,6 +118,23 @@ public class WebPage
     {
         pageCanvasGroup.alpha = 1f;
         pageCanvasGroup.blocksRaycasts = true;
+    }
+
+    public void UnHide()
+    {
+        title.gameObject.SetActive(true);
+        gameObject.SetActive(true);
+    }
+    public void Hide()
+    {
+        title.gameObject.SetActive(false);
+        gameObject.SetActive(false);
+    }
+
+    public void Clear()
+    {
+        UnityEngine.Object.Destroy(gameObject);
+        UnityEngine.Object.Destroy(title.gameObject);
     }
 }
 [Serializable]

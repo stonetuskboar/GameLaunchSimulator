@@ -161,6 +161,7 @@ MonoBehaviour:
   tiebaData: {fileID: 11400000, guid: 5bb8f7baefffc6b4f928c6f40463c7ae, type: 2}
   replyList: []
   titleText: {fileID: 4787299829168482484}
+  controller: {fileID: 0}
 --- !u!225 &6259852879751961341
 CanvasGroup:
   m_ObjectHideFlags: 0

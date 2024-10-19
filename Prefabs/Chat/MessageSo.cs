@@ -15,7 +15,7 @@ public class MessageSo : ScriptableObject
 
     public FriendData GetFriendById(int id)
     {
-        if (friendsList[id].FriendId == id)
+        if (id < friendsList.Count && friendsList[id].FriendId == id)
         {
             return friendsList[id];
         }
@@ -31,7 +31,7 @@ public class MessageSo : ScriptableObject
     }
     public MessageData GetMessageById(int id)
     {
-        if (messageList[id].messageId == id)
+        if (id < messageList.Count &&  messageList[id].messageId == id)
         {
             return messageList[id];
         }
@@ -47,7 +47,11 @@ public class MessageSo : ScriptableObject
     }
     public MessageSegment GetSegmentById( int id)
     {
-        if (messageSegmentList[id].SegmentId == id)
+        if(id < 0)
+        {
+            return null;
+        }
+        if (id < messageSegmentList.Count && messageSegmentList[id].SegmentId == id)
         {
             return messageSegmentList[id];
         }
@@ -80,13 +84,21 @@ public class MessageData
     [TextArea(1, 4)]
     public string text = "";
 }
+[Serializable]
+public class ChatReplyData
+{
+    public int replyId; //用于在回复后触发事件
+    public int messageId;
+    public int nextSegmentId = -1;// -1的话代表没有回复
+}
 
 [Serializable]
 public class MessageSegment
 {
     public int SegmentId = -1;
     public int FriendId = -1;//-1是不存在。
-    public List<int> messageIdList;
+    public List<int> messageIdList = new();
+    public List<ChatReplyData> replyList = new();
 }
 
 [Serializable]

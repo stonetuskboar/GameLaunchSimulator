@@ -19,6 +19,7 @@ public class Application : MonoBehaviour, IPointerClickHandler, IPointerDownHand
     private bool isHold = false;
     public void Init(DesktopManager desk, AppData data) //ÔÚDesktopManager´¦´¥·¢
     {
+        transform.name = "App_" + data.AppName;
         deskManager = desk;
         appId = data.AppId;
         iconImage.sprite = data.AppSprite;

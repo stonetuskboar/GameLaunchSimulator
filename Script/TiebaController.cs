@@ -11,13 +11,22 @@ public class TiebaController : MonoBehaviour
     public TiebaData tiebaData;
     public List<TiebaReply> replyList;
     public TextMeshProUGUI titleText;
+    public ExplorerController controller;
 
-
-    public void Start()
+    //public void Start()
+    //{
+    //    ShowNewPostById(0);
+    //}
+    public void Init(TiebaData tiebaSo)
     {
-        ShowNewPostById(0);
+        tiebaData = tiebaSo;
     }
 
+    public void InitAndShowPost(TiebaData tiebaSo, int id)
+    {
+        Init(tiebaSo);
+        ShowNewPostById(id);
+    }
 
     public void ShowNewPostById(int id)
     {
@@ -36,15 +45,15 @@ public class TiebaController : MonoBehaviour
 
         int i; //注意i不在for循环内定义。将有replydata的回复显示。将没有replydata的回复隐藏。
 
-        while(replyList.Count < data.replies.Count)
+        while(replyList.Count < data.replyList.Count)
         {
             CreateNewReply();
         }
-        for (i = 0; i < data.replies.Count; i++)
+        for (i = 0; i < data.replyList.Count; i++)
         {
-            if (data.replies[i] != null)
+            if (data.replyList[i] != null)
             {
-                replyList[i].SetReplyThenActive(data.replies[i]);
+                replyList[i].SetReplyThenActive(data.replyList[i]);
             }
             else
             {
@@ -68,22 +77,6 @@ public class TiebaController : MonoBehaviour
         obj.SetActive(false);
         return reply;
     }
-
 }
 
 
-[Serializable]
-public class PostData
-{
-    public int postId;
-    public string MainTitleText;
-    public List<ReplyData> replies = new List<ReplyData>();
-}
-
-[Serializable]
-public class ReplyData
-{
-    public Sprite avatar;
-    [TextArea(1, 6)]
-    public string replyText;
-}

@@ -432,6 +432,7 @@ GameObject:
   - component: {fileID: 6273721732500749546}
   - component: {fileID: 153655939545911125}
   - component: {fileID: 8896560506068950743}
+  - component: {fileID: 175056626724796705}
   m_Layer: 5
   m_Name: ErrorWarning
   m_TagString: Untagged
@@ -518,6 +519,20 @@ MonoBehaviour:
   warnText: {fileID: 1776673194939535084}
   warnIcon: {fileID: 1707870391951301537}
   button: {fileID: 1964344711813752167}
+--- !u!114 &175056626724796705
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7700945253516673359}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ebd2e2a2b56e3b4db8b16ffa2b9e914, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DragTargetRectTransform: {fileID: 655965257172574190}
+  AdjustType: 1
 --- !u!1 &8490464625442437354
 GameObject:
   m_ObjectHideFlags: 0

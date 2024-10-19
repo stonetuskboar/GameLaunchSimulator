@@ -21,16 +21,40 @@ public class patchHomeController : MonoBehaviour
         }
     }
 
+    public void UpdateFileList(List<int> fileDataIdList)
+    {
+        while(fileList.Count < fileDataIdList.Count)
+        {
+            fileList.Add(CreatePrefab());
+        }
+
+        for(int i = 0; i < fileDataIdList.Count; i++)
+        {
+            FileData data = fileSo.fileDataList[fileDataIdList[i]];
+            fileList[i].SetFile(data);
+            fileList[i].gameObject.SetActive(true);
+        }
+        for(int i = fileDataIdList.Count; i < fileList.Count; i++)
+        {
+            fileList[i].gameObject.SetActive(false);
+        }
+    }
+
     public 控制器_下载按钮 CreatePrefab(FileData data)
     {
         if (data == null)
         {
             return null;
         }
+        控制器_下载按钮 file = CreatePrefab();
+        file.SetFile(data);
+        return file;
+    }
+    public 控制器_下载按钮 CreatePrefab()
+    {
         GameObject obj = Instantiate(FilePrefab, FileLayoutTransform);
         控制器_下载按钮 file = obj.GetComponent<控制器_下载按钮>();
         file.Init(this);
-        file.SetFile(data);
         return file;
     }
 

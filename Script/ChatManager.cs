@@ -2,14 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+ public delegate void MessageDelegate(int segmentId);
 public class ChatManager : MonoBehaviour
 {
     public ChatController ChatController;
     public MessageSo messageSo;
+    public event MessageDelegate OnMessageSegmentEnd;
 
     public void Awake()
     {
-        ChatController.Init(messageSo);
+        ChatController.Init(this,messageSo);
     }
 
     public void ShowChat()
@@ -20,34 +22,51 @@ public class ChatManager : MonoBehaviour
     {
 
     }
+
+
+    public void AfterReplyClick(int segmentId ,int messageId, FriendObject friend)
+    {
+        ChatController.AddMessage(messageId, friend);
+        MessageSegment segment = messageSo.GetSegmentById(segmentId);
+        float waitTime;
+        if (segment == null || segment.messageIdList == null || segment.messageIdList.Count <= 0 )
+        {
+            waitTime = 0f;
+        }
+        else
+        {
+            MessageData data0 = messageSo.GetMessageById(messageId);
+            MessageData data1 = messageSo.GetMessageById(segment.messageIdList[0]);
+
+            float basicLength = Mathf.Sqrt(data1.text.Length / 4f + data0.text.Length / 8f);
+            waitTime = basicLength * Random.Range(0.7f, 1.3f);
+        }
+        StartShowMessageSegment(segmentId, waitTime);
+    }
     public void StartShowMessageSegment(int segmentId)
     {
-        StartCoroutine(ShowMessageSegment(segmentId, VoidDelegate));
+        StartCoroutine(ShowMessageSegment(segmentId , 0f));
     }
-
-    public void VoidDelegate()
+    public void StartShowMessageSegment(int segmentId, float firstMessageWaitTime)
     {
-        //没有回调
+        StartCoroutine(ShowMessageSegment(segmentId, firstMessageWaitTime));
     }
-
-    public void StartShowMessageSegment(int segmentId, BasicDelegate callBack)
-    {
-        StartCoroutine(ShowMessageSegment(segmentId,callBack));
-    }
-
-    IEnumerator ShowMessageSegment(int segmentId, BasicDelegate callBack)
+    IEnumerator ShowMessageSegment(int segmentId,float firstMessageWaitTime)
     {
         MessageSegment segment = messageSo.GetSegmentById(segmentId);
-        if(segment == null)
+        if(segment == null || segment.messageIdList == null || segment.messageIdList.Count <= 0)
         {
             yield break;
         }
-        ChatController.IfNewAddFriend(segment.FriendId);
-        FriendObject friend = ChatController.SwitchChatToFriend(segment.FriendId);
-        List<int> messages = segment.messageIdList;
+        yield return new WaitForSeconds(firstMessageWaitTime);
 
+        ChatController.IfNewAddFriend(segment.FriendId);
+        FriendObject friend = ChatController.FindFriendObjectById(segment.FriendId);
+
+        List<int> messages = segment.messageIdList;
         if (messages.Count > 0)
         {
+            ChatController.SwitchChatToFriend(friend); //在这个方法里，会执行UnshowAllReply();如果Friend对象的replylist没有元素，就不显示reply
             MessageData data0;
             MessageData data1 = messageSo.GetMessageById(messages[0]);
             ChatController.AddMessage(data1, friend);
@@ -57,16 +76,13 @@ public class ChatManager : MonoBehaviour
                 data1 = messageSo.GetMessageById(messages[i]);
                 float basicLength = Mathf.Sqrt(data1.text.Length / 8f + data0.text.Length / 16f);
                 float waitTime = basicLength * Random.Range(0.7f, 1.3f);
-                float time = 0f;
-                while (time < waitTime)
-                {
-                    yield return null;
-                    time += Time.deltaTime;
-                }
+                yield return new WaitForSeconds(waitTime);
                 ChatController.AddMessage(data1, friend);
             }
         }
+        friend.replyDataList = segment.replyList;
+        ChatController.ShowReplysByFriend(friend);
 
-        callBack?.Invoke();
+        OnMessageSegmentEnd?.Invoke(segmentId);
     }
 }

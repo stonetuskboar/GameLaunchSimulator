@@ -9,7 +9,7 @@ public class TiebaReply : MonoBehaviour
     public Image avatar;
     public TextMeshProUGUI replyText;
 
-    public void SetReply(ReplyData data)
+    public void SetReply(TiebaReplyData data)
     {
         avatar.sprite = data.avatar;
         replyText.text = data.replyText;
@@ -20,7 +20,7 @@ public class TiebaReply : MonoBehaviour
         replyText.text = text;
     }
 
-    public void SetReplyThenActive(ReplyData data)
+    public void SetReplyThenActive(TiebaReplyData data)
     {
         SetReply(data);
         gameObject.SetActive(true);

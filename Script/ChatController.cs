@@ -6,61 +6,67 @@ using UnityEngine.UI;
 
 public class ChatController : LayeredCanvas
 {
-
-    public Transform FriendAreaTransform;
+    public RectTransform ChatRectTrans;
+    public RectTransform FriendAreaTransform;
     public TextMeshProUGUI NowNameTmp;
     public ScrollRect MessageScroll;
+    public RectTransform ChatReplyListTransform;
     [Header("预制件")]
     public GameObject ReceiveMessagePrefab;
     public GameObject SendMessagePrefab;
-    public GameObject FriendPrefab;
+    public GameObject FriendLabelPrefab;
     public GameObject MessageListPrefab;
+    public GameObject ReplyPrefab;
     private MessageSo messageSo;
 
     private FriendObject nowChatFriend = null; 
-
+    private ChatManager chatManager;
     public List<FriendObject> FriendList = new();
+    public List<ChatReplyObject> ChatReplyList = new();
 
     public override void Awake()
     {
         base.Awake();
         MessageScroll.enabled = true;
     }
-    public void Init(MessageSo so)
+    public void Init(ChatManager manager, MessageSo so)
     {
+        chatManager = manager;
         messageSo = so;
     }
-    public FriendObject SwitchChatToFriend(int id)
+    public void SwitchChatToFriend(int id)
     {
         FriendObject friend = FindFriendObjectById(id);
         SwitchChatToFriend(friend);
-        return friend;
     }
-    public FriendObject SwitchChatToFriend(FriendObject friend)
+    public void SwitchChatToFriend(FriendObject friend)
     {
-        //ClearAllMessage();
-        nowChatFriend?.UnShow();
-        nowChatFriend = friend;
-        MessageScroll.content = friend.MessageListRectTrans;
-        friend.Show();
-        NowNameTmp.text = nowChatFriend.name.text;
-        return friend;
+        if (friend != nowChatFriend)
+        {
+            UnshowAllReply();
+            nowChatFriend?.UnShow();
+            nowChatFriend = friend;
+            MessageScroll.content = friend.MessageListRectTrans;
+            ShowReplysByFriend(friend);
+            friend.Show();
+            NowNameTmp.text = nowChatFriend.friendName.text;
+        }
     }
 
 
 
-    public void UpdateFriend(int friendId,string text)
+    public void TopFriendLabel(int friendId,string text)
     {
         FriendObject friendObject = FindFriendObjectById(friendId);
         if (friendObject != null)
         {
-            UpdateFriend(friendObject,text);
+            TopFriendLabel(friendObject,text);
         }
     }
 
-    public void UpdateFriend(FriendObject friendObj, string text)
+    public void TopFriendLabel(FriendObject friendObj, string text)
     {
-        friendObj.transform.SetSiblingIndex(0);
+        friendObj.labelTransform.SetSiblingIndex(0);
         friendObj.lastMessage.text = text;
     }
 
@@ -121,17 +127,18 @@ public class ChatController : LayeredCanvas
     {
         MessageObject messageObject = CreateNewMessageObject(data.IsSend, friend.MessageListRectTrans);
         messageObject.SetText(data.text);
+        messageObject.SetData(data);
         if (data.IsSend == false)
         {
             messageObject.SetAvatar(friend.avatarImage.sprite);
-            UpdateFriend(friend, data.text);
+            TopFriendLabel(friend, data.text);
         }
         else
         {
             messageObject.SetAvatar(messageSo.PlayerData.AvatarSprite);
         }
         friend.MessageList.Add(messageObject);
-        messageObject.gameObject.SetActive(true);
+        messageObject.ShowMessage();
         return messageObject;
     }
 
@@ -155,15 +162,11 @@ public class ChatController : LayeredCanvas
     public FriendObject CreateNewFriendObject(int friendId)
     {
         GameObject obj;
-        FriendObject friendObject = new();
+        
 
-        obj = Instantiate(FriendPrefab, FriendAreaTransform);
-        friendObject.gameObject = obj;
-        friendObject.transform = obj.transform;
-        friendObject.avatarImage = RecursiveFindChild(obj.transform,"avatar").GetComponent<Image>();
-        friendObject.name = RecursiveFindChild(obj.transform, "NameText").GetComponent<TextMeshProUGUI>();
-        friendObject.lastMessage = RecursiveFindChild(obj.transform, "MessageText").GetComponent<TextMeshProUGUI>();
-        friendObject.Init(messageSo.GetFriendById(friendId));
+        obj = Instantiate(FriendLabelPrefab, FriendAreaTransform);
+        FriendObject friendObject = obj.GetComponent<FriendObject>();
+        friendObject.Init(this,messageSo.GetFriendById(friendId));
 
         GameObject messageListObj = Instantiate(MessageListPrefab, MessageScroll.transform);
         messageListObj.name = messageListObj.name.Replace("(Clone)", "_"+friendId.ToString());
@@ -173,54 +176,79 @@ public class ChatController : LayeredCanvas
         return friendObject;
     }
 
-
-    public static Transform RecursiveFindChild(Transform parent, string childName)
+    public void UnshowAllReply()
     {
-        foreach (Transform child in parent)
+        for(int i = 0; i < ChatReplyList.Count; i++)
         {
-            if (child.name == childName)
-            {
-                return child;
-            }
-            else
-            {
-                Transform found = RecursiveFindChild(child, childName);
-                if (found != null)
-                {
-                    return found;
-                }
-            }
+            ChatReplyList[i].UnShowReply();
         }
-        return null;
-    }
-}
-public class FriendObject
-{
-    public bool IsNowChatting;
-    public int friendId;
-    public GameObject gameObject;
-    public Transform transform;
-    public Image avatarImage;
-    public TextMeshProUGUI name;
-    public TextMeshProUGUI lastMessage;
-    public CanvasGroup MessageListCanvasGroup;
-    public RectTransform MessageListRectTrans;
-    public List<MessageObject> MessageList = new List<MessageObject>();
-    public void Init(FriendData data)
-    {
-        friendId = data.FriendId;
-        avatarImage.sprite = data.AvatarSprite;
-        name.text = data.Name;
     }
 
-    public void UnShow()
+    public void ShowReplysByFriend(FriendObject Friend)
     {
-        MessageListCanvasGroup.alpha = 0f;
-        MessageListCanvasGroup.blocksRaycasts = false;
+        if(Friend.replyDataList == null)
+        {
+            return;
+        }
+        List<ChatReplyData> data = Friend.replyDataList;
+        while (ChatReplyList.Count < data.Count)
+        {
+            CreateChatReplyObject();
+        }
+
+        if(Friend != nowChatFriend) //如果当前聊天界面的朋友不是正在发消息的朋友，则不更改回复状态。
+        {
+            return;
+        }
+
+        for (int i = 0; i < data.Count; i++)
+        {
+            ChatReplyList[i].SetReply(data[i], Friend);
+            ChatReplyList[i].ShowReply();
+        }
+        for (int i = data.Count; i < ChatReplyList.Count; i++)
+        {
+            ChatReplyList[i].UnShowReply();
+        }
+
     }
-    public void Show()
+
+
+    public ChatReplyObject CreateChatReplyObject()
     {
-        MessageListCanvasGroup.alpha = 1f;
-        MessageListCanvasGroup.blocksRaycasts = true;
+        GameObject obj;
+
+        obj = Instantiate(ReplyPrefab, ChatReplyListTransform);
+        ChatReplyObject chatObject = obj.GetComponent<ChatReplyObject>();
+        chatObject.Init(chatManager);
+        ChatReplyList.Add(chatObject);
+        return chatObject;
+    }
+
+    //被封印的邪恶魔法。在子对象中寻找有对应名字的对象。
+
+    //public static Transform RecursiveFindChild(Transform parent, string childName)
+    //{
+    //    foreach (Transform child in parent)
+    //    {
+    //        if (child.name == childName)
+    //        {
+    //            return child;
+    //        }
+    //        else
+    //        {
+    //            Transform found = RecursiveFindChild(child, childName);
+    //            if (found != null)
+    //            {
+    //                return found;
+    //            }
+    //        }
+    //    }
+    //    return null;
+    //}
+    public MessageSo GetMessageSo()
+    {
+        return messageSo;
     }
 }
+

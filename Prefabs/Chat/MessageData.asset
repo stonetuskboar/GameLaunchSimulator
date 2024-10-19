@@ -23,6 +23,9 @@ MonoBehaviour:
     AvatarSprite: {fileID: 21300000, guid: c461e5900f0dcc84ca87c79edb1d45df, type: 3}
     Name: "\u6674\u5929"
   - FriendId: 3
+    AvatarSprite: {fileID: 21300000, guid: cdc62f5633949b244b0daa0d7575cb91, type: 3}
+    Name: "\u718A\u732B\u70E7\u70E4"
+  - FriendId: 3
     AvatarSprite: {fileID: 21300000, guid: 366881d27e43ae646a262596575e90bc, type: 3}
     Name: "\u5F20\u53D4\u53D4"
   PlayerData:
@@ -32,36 +35,79 @@ MonoBehaviour:
   messageSegmentList:
   - SegmentId: 0
     FriendId: 0
-    messageIdList: 0000000001000000020000000300000004000000050000000600000007000000
+    messageIdList: 00000000
+    replyList:
+    - replyId: 0
+      messageId: 1
+      nextSegmentId: 1
+    - replyId: 0
+      messageId: 18
+      nextSegmentId: 1
   - SegmentId: 1
+    FriendId: 0
+    messageIdList: 02000000030000000400000005000000060000000700000025000000
+    replyList: []
+  - SegmentId: 2
     FriendId: 2
-    messageIdList: 08000000090000000a0000000b0000000c0000000d0000000e0000000f000000
+    messageIdList: 08000000090000000a000000
+    replyList:
+    - replyId: 2
+      messageId: 11
+      nextSegmentId: 3
+    - replyId: 3
+      messageId: 17
+      nextSegmentId: 3
+  - SegmentId: 3
+    FriendId: 2
+    messageIdList: 0c0000000d0000000e0000000f000000
+    replyList: []
+  - SegmentId: 4
+    FriendId: 2
+    messageIdList: 13000000
+    replyList: []
+  - SegmentId: 5
+    FriendId: 0
+    messageIdList: 1e000000
+    replyList: []
+  - SegmentId: 6
+    FriendId: 3
+    messageIdList: 1f0000002000000021000000
+    replyList:
+    - replyId: 4
+      messageId: 34
+      nextSegmentId: -1
+    - replyId: 5
+      messageId: 35
+      nextSegmentId: -1
+    - replyId: 6
+      messageId: 36
+      nextSegmentId: -1
   messageList:
   - messageId: 0
     IsSend: 0
     text: "\u54E5\u4EEC\uFF0C\u5728\u7EBF\u4E48\uFF1F"
   - messageId: 1
     IsSend: 1
-    text: "\u600E\u4E48"
+    text: "\u6709\u4EC0\u4E48\u4E8B\uFF1F"
   - messageId: 2
     IsSend: 0
-    text: "\u4F60\u8FD8\u8BB0\u5F97\u5C0F\u65F6\u5019\u73A9\u7684\u6E38\u620F\u5417\uFF1F\u6211\u8FD9\u6709\u62A2\u6EE9\u4E0B\u6D772000\u7684\u8D44\u6E90"
+    text: "\u4F60\u8FD8\u8BB0\u5F97\u5C0F\u65F6\u5019\u73A9\u7684\u6E38\u620F\u5417\uFF1F\u6211\u627E\u5230\u4E86\u62A2\u6EE9\u4E0B\u6D77\u7684\u8D44\u6E90"
   - messageId: 3
     IsSend: 1
-    text: "\u8FD9\u79CD\u4E1C\u897F\u4F60\u90FD\u80FD\u627E\u5230\uFF1F\u597D\u6000\u5FF5\u554A\u3002"
+    text: "\u8FD9\u79CD\u8001\u4E1C\u897F\u4F60\u90FD\u80FD\u627E\u5230\uFF1F\u7ED9\u6211\u73A9\u73A9"
   - messageId: 4
     IsSend: 0
-    text: "\u53EF\u662F\u4E00\u8FDB\u754C\u9762\u5C31\u603B\u95EA\u9000\uFF0C\u4F60\u5C0F\u5FC3\u70B9"
+    text: "\u53EF\u662F\u6709\u4E2A\u95EE\u9898\uFF0C\u4E00\u8FDB\u754C\u9762\u5C31\u603B\u95EA\u9000\uFF0C\u4F60\u5C0F\u5FC3\u70B9"
   - messageId: 5
     IsSend: 1
-    text: "\u90A3\u4F60\u53D1\u7ED9\u6211\u505A\u4EC0\u4E48\uFF01"
+    text: "\u989D\u2026\u2026"
   - messageId: 6
     IsSend: 0
-    text: "\u8BF4\u4E0D\u5B9A\u4F60\u5C31\u80FD\u89E3\u51B3\u4E86\u5462\u3002"
+    text: "\u4F60\u73A9\u7684\u6E38\u620F\u6700\u591A\uFF0C\u8BF4\u4E0D\u5B9A\u5C31\u627E\u5230\u89E3\u51B3\u529E\u6CD5\u4E86\u5462"
   - messageId: 7
     IsSend: 0
     text: "\u53D1\u7ED9\u4F60\u5566\u3002<br>       <link=\"beachHead2000\"><size=72><sprite
-      index= 0></size> <br><color=#999999>\u62A2\u6EE9\u4E0B\u6D772000.zip</color></link>"
+      index= 0></size> <br><color=#CBCBCB>\u62A2\u6EE9\u4E0B\u6D772000.zip</color></link>"
   - messageId: 8
     IsSend: 0
     text: "\u54E5\uFF0C\u542C\u8BF4\u4F60\u628A\u90A3\u4E2A\u62A2\u6EE9\u4E0B\u6D77\u8C03\u597D\u5566\uFF1F"
@@ -76,13 +122,51 @@ MonoBehaviour:
     text: "\u8BF4\u5427"
   - messageId: 12
     IsSend: 0
-    text: "<link=\"aoe2\"><size=72><sprite index= 0></size> <br><color=#999999>\u738B\u56FD\u65F6\u4EE32.zip</color></link>"
+    text: "    <link=\"aoe2\"><size=72><sprite index= 0></size> <br><color=#CBCBCB>\u738B\u56FD\u65F6\u4EE32.zip</color></link>"
   - messageId: 13
     IsSend: 1
-    text: "\u597D\u719F\u6089\u7684\u6E38\u620F"
+    text: "\u4E5F\u662F\u7AE5\u5E74\u6E38\u620F\u554A\uFF0C\u6253\u4E0D\u5F00\u5417\uFF1F"
   - messageId: 14
     IsSend: 0
-    text: "\u53EF\u4E0D\u561B\uFF0C\u6362\u4E86\u65B0\u7535\u8111\u5C31\u4E0D\u77E5\u9053\u4E3A\u5565\u73A9\u4E0D\u4E86\uFF0C\u4E00\u5F00\u5168\u5C4F\u5C31\u95EA\u9000\u4E86\uFF0C\u6211\u8C03\u4E86\u4E0B\u8BBE\u7F6E\u4E5F\u6CA1\u8C03\u597D"
+    text: "\u53EF\u4E0D\u561B\uFF0C\u6362\u4E86\u65B0\u7535\u8111\u5C31\u4E0D\u77E5\u9053\u4E3A\u5565\u73A9\u4E0D\u4E86\uFF0C\u4E00\u5F00\u5168\u5C4F\u5C31\u95EA\u9000\uFF0C\u6211\u8C03\u4E86\u4E0B\u8BBE\u7F6E\uFF0C\u4E5F\u6CA1\u8C03\u597D"
   - messageId: 15
     IsSend: 1
-    text: "\u884C\uFF0C\u8BA9\u6211\u67E5\u67E5\u539F\u56E0\u5427"
+    text: "\u884C\uFF0C\u8BA9\u6211\u67E5\u67E5"
+  - messageId: 16
+    IsSend: 1
+    text: "\u6211\u5728"
+  - messageId: 17
+    IsSend: 1
+    text: "\u600E\u4E48\u4E86"
+  - messageId: 18
+    IsSend: 1
+    text: "\u600E\u4E48\u5566\uFF1F"
+  - messageId: 19
+    IsSend: 0
+    text: "\u6211\u592A\u61D2\u4E86\uFF0C\u4E0D\u60F3\u5199\u5BF9\u8BDD\u3002<br>    
+      <link=\"fo3\"><size=72><sprite index= 0></size> <br><color=#CBCBCB>\u5F02\u5C18\u4F59\u751F3.zip</color></link>"
+  - messageId: 30
+    IsSend: 0
+    text: "            <link=\"beachHead2000Virus\"><size=72><sprite index= 0></size>
+      <br><color=#CBCBCB>\u62A2\u6EE9\u4E0B\u6D772000.zip.exe</color></link>"
+  - messageId: 31
+    IsSend: 0
+    text: "\u4EBA\u7C7B\uFF0C\u4F60\u7684\u7535\u8111\u5DF2\u7ECF\u88AB\u611F\u67D3\u4E86\u3002"
+  - messageId: 32
+    IsSend: 0
+    text: "\u4ECE\u73B0\u5728\u8D77\uFF0C\u4F60\u5C06\u53EA\u80FD\u770B\u5230\u4E71\u7801\uFF01"
+  - messageId: 33
+    IsSend: 0
+    text: "\u67F7\u6CB5\u604F\u904B"
+  - messageId: 34
+    IsSend: 1
+    text: "\u9422\u8FA8\u6E40\u7455\u4F78\u30BD\u6FC2\u85C9\u6D94\u72B2\u3049\u6FB6\u2541\u609C\u6D93?"
+  - messageId: 35
+    IsSend: 1
+    text: "\xD3\xC9\xD4\xC2\xD2\xAA\xBA\xC3\xBA\xC3\xD1\xA7\xCF\xB0\xCC\xEC\xCC\xEC\xCF\xF2\xC9\xCF"
+  - messageId: 36
+    IsSend: 1
+    text: "\xBD\xA6\xE4\xA4\xA9\xE5\xBD\xA6\xE4\xA4\xA9\xE5\xBD\xA6\xE4\xA4\xA9\xE5"
+  - messageId: 37
+    IsSend: 1
+    text: "\u597D\u5427"
