@@ -14,6 +14,8 @@ public class LevelManager : MonoBehaviour
     public ExplorerManager explorerManager;
     public CameraController cameraController;
     public PetController petController;
+    public InputController inputController;
+    public BackGroundController backGroundController;
     public static LevelManager instance = null;
     public int startLoadLevel = 1;
     public void Awake()
@@ -35,12 +37,12 @@ public class LevelManager : MonoBehaviour
     public void CreateChat()
     {
         //App数据由levelManager控制，但0 = 聊天软件，1=浏览器，这俩不变
-        Application chat = deskManager.CreateAnApplication(0);
+        App chat = deskManager.CreateAnApplication(0);
         chat.LaunchAddListener(LaunchChat);
     }
     public void CreateExplorer()
     {
-        Application explorer = deskManager.CreateAnApplication(1);
+        App explorer = deskManager.CreateAnApplication(1);
         explorer.LaunchAddListener(LaunchExplorer);
     }
     public void LaunchExplorer()

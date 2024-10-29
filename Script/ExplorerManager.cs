@@ -20,7 +20,17 @@ public class ExplorerManager : MonoBehaviour
         //AddTiebaController();
         //AddPatchHomeController();
     }
-
+    public WebPage AddPageById(int id)
+    {
+        if(webpagesData.Count > id)
+        {
+            return explorerController.OpenNewPage(webpagesData[id]);//0 = Ìù°É 1 = Å®æ´²¹¶¡
+        }
+        else
+        {
+            return null;
+        }
+    }
     public WebPage AddTiebaController()
     {
         return explorerController.OpenNewPage(webpagesData[0]);//0 = Ìù°É 1 = Å®æ´²¹¶¡
@@ -29,6 +39,10 @@ public class ExplorerManager : MonoBehaviour
     public WebPage AddPatchHomeController()
     {
         return explorerController.OpenNewPage(webpagesData[1]);
+    }
+    public WebPage GetPage(int id)
+    {
+        return explorerController.FindPageById(id);
     }
 
     public TiebaController GetTiebaController()
@@ -56,4 +70,5 @@ public class ExplorerManager : MonoBehaviour
         TiebaController tieba = GetTiebaController();
         tieba.InitAndShowPost(tiebaSo, id);
     }
+
 }

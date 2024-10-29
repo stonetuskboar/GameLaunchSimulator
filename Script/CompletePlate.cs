@@ -17,6 +17,7 @@ public class CompletePlate : MonoBehaviour
 
     public void StartAppear()
     {
+        AudioManager.Instance.PlaySfxByName("Victory");
         StartCoroutine(Appear());
     }
 

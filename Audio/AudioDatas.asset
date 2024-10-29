@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6974ac39e24321646bdce9f49ec23c26, type: 3}
+  m_Name: AudioDatas
+  m_EditorClassIdentifier: 
+  AudioList:
+  - AudioName: Open
+    AudioClip: {fileID: 8300000, guid: 1421c7c1cfd215140b8f44fe73282b14, type: 3}
+  - AudioName: ReceiveMessage
+    AudioClip: {fileID: 8300000, guid: b8192c2994f7bd540bcf7ae5a3b1e0b5, type: 3}
+  - AudioName: SendMessage
+    AudioClip: {fileID: 8300000, guid: 29edd6b811cc41b47a2f3eacfcdc2b76, type: 3}
+  - AudioName: AddApp
+    AudioClip: {fileID: 8300000, guid: e24a7118490009242b35a06a145ee333, type: 3}
+  - AudioName: Warn
+    AudioClip: {fileID: 8300000, guid: 09dcc97fffbbfde4a9f4b09a7f8af8b0, type: 3}
+  - AudioName: Victory
+    AudioClip: {fileID: 8300000, guid: 4b88e82c51aa9074d93beaefd3496f28, type: 3}
+  - AudioName: Downloaded
+    AudioClip: {fileID: 8300000, guid: 35654d4af21d2d9449dbafb12be032df, type: 3}
+  - AudioName: ShutDown
+    AudioClip: {fileID: 8300000, guid: 21de72839a08bbe419b22f0328d13a41, type: 3}
+  - AudioName: Dangerous
+    AudioClip: {fileID: 8300000, guid: 09dcc97fffbbfde4a9f4b09a7f8af8b0, type: 3}
+  - AudioName: PetMessage
+    AudioClip: {fileID: 8300000, guid: c0114749980ef334ab11336834d8c452, type: 3}
+  - AudioName: Crash
+    AudioClip: {fileID: 8300000, guid: ada62468be978be46bea8eb43157bc84, type: 3}
+  - AudioName: Start
+    AudioClip: {fileID: 8300000, guid: fe26a370f1e670947b23ef70013d3a10, type: 3}
+  - AudioName: ShadowShake
+    AudioClip: {fileID: 8300000, guid: 20e5e13b0fba3394489a0dc1b7b9dff2, type: 3}
+  - AudioName: Damage1
+    AudioClip: {fileID: 8300000, guid: 76309addfe3adcc4688f115135a6daac, type: 3}
+  - AudioName: Damage2
+    AudioClip: {fileID: 8300000, guid: 5052e0c72c28f324dbd05b4475e0f632, type: 3}
+  - AudioName: Damage3
+    AudioClip: {fileID: 8300000, guid: b141067582e8a3e47bdb3469e45f092f, type: 3}
+  - AudioName: ToiletStory4
+    AudioClip: {fileID: 8300000, guid: 2687e6ea5d7160641aad325f75b47416, type: 3}
+  - AudioName: Damage4
+    AudioClip: {fileID: 8300000, guid: 75a16d68d9dae3d43b634c3c6d152d7f, type: 3}
+  - AudioName: Shoot
+    AudioClip: {fileID: 8300000, guid: 254bbd8166c089140ae69e3a11c0b0a3, type: 3}
+  - AudioName: Hurt
+    AudioClip: {fileID: 8300000, guid: 32794b6343c05f542b9b66d6574427c8, type: 3}

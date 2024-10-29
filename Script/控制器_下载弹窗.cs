@@ -11,7 +11,7 @@ public class 控制器_下载弹窗 : MonoBehaviour
     public float downloadTime = 1.5f;
     public float 淡化时间 = 0.5f;
 
-    private 控制器_下载按钮 nowFile = null;
+    private FileObject nowFile = null;
     public Image 软件图标;
     public TextMeshProUGUI 软件名称;
     public TextMeshProUGUI 软件大小;
@@ -26,7 +26,7 @@ public class 控制器_下载弹窗 : MonoBehaviour
         UnActive();
     }
 
-    public void SetThenActive(FileData data, 控制器_下载按钮 file)
+    public void SetThenActive(FileData data, FileObject file)
     {
         nowFile = file;
         this.软件图标.sprite = data.fileSprite;
@@ -84,7 +84,7 @@ public class 控制器_下载弹窗 : MonoBehaviour
         }
         downloadComplete.SetActive(true);
         downloading.SetActive(false);
-
+        AudioManager.Instance.PlaySfxByName("Downloaded");
         yield return new WaitForSeconds(1f);
         if (nowFile != null)
         {

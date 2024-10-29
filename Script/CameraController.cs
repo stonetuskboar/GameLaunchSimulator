@@ -5,12 +5,17 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     public Camera Camera;
-    private Transform cameraTransform;
+    public Transform cameraTransform;
     private float ogSize;
     public void Awake()
     {
         cameraTransform = Camera.transform;
         ogSize = Camera.orthographicSize;
+    }
+
+    public float GetOgSize()
+    {
+        return ogSize;
     }
     public float GetSize()
     {
@@ -29,6 +34,16 @@ public class CameraController : MonoBehaviour
         Vector3 position = Camera.transform.position;
         position.x += screenWidth;
         position.y -= screenHeight;
+        Camera.transform.position = position;
+    }
+    public void ChangeSizeWhenFixedLeftBottom(float AddSize)
+    {
+        Camera.orthographicSize += AddSize;
+        float screenHeight = AddSize;  // orthographicSize为半高
+        float screenWidth = screenHeight * Camera.aspect;  // 宽度通过高宽比来计算
+        Vector3 position = Camera.transform.position;
+        position.x += screenWidth;
+        position.y += screenHeight;
         Camera.transform.position = position;
     }
     public void BackToOgSizeWhenFixedLeftTop()

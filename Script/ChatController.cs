@@ -130,11 +130,13 @@ public class ChatController : LayeredCanvas
         messageObject.SetData(data);
         if (data.IsSend == false)
         {
+            AudioManager.Instance.PlaySfxByName("ReceiveMessage");
             messageObject.SetAvatar(friend.avatarImage.sprite);
             TopFriendLabel(friend, data.text);
         }
         else
         {
+            AudioManager.Instance.PlaySfxByName("SendMessage");
             messageObject.SetAvatar(messageSo.PlayerData.AvatarSprite);
         }
         friend.MessageList.Add(messageObject);

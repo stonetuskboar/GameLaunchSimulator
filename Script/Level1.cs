@@ -134,7 +134,7 @@ public class Level1 : BasicLevel
         if(link == "beachHead2000" && CheckIfAppExist(2) == false)
         {
             AddApps();
-            Application app = GetAppById(2);
+            App app = GetAppById(2);
             app.LaunchAddListener(LaunchGame);
             warn.Init(app);
             StartCoroutine(WaitAndShowPet(0f,3f,app.transform.position + new Vector3(0, 100, 0), "新安装的游戏会自动出现在这里！双击或鼠标中键可以直接打开，右键或长按可以展开菜单。"));

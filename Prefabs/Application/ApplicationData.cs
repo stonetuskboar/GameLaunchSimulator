@@ -7,9 +7,10 @@ using UnityEngine;
 public class ApplicationSo : ScriptableObject
 {
     public List<AppData> apps = new List<AppData>();
-
+    public AppData simulatorAppdata;
     public AppData GetAppDataById(int id)
     {
+
         if(apps.Count > id)
         {
             if (apps[id].AppId == id)
@@ -24,8 +25,14 @@ public class ApplicationSo : ScriptableObject
             return apps[i];
             }
         }
+
         Debug.Log("在ApplicationSo中找不到对应AppData。");
         return new AppData("找不到对应AppData");
+    }
+
+    public int GetCount()
+    {
+        return apps.Count;
     }
 }
 

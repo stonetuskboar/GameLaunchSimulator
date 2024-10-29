@@ -32,7 +32,7 @@ public class InputController : MonoBehaviour
     {
         PointerEventData pointerData = new PointerEventData(EventSystem.current)
         {
-            position = Mouse.current.position.ReadValue() // 使用新的输入系统获取鼠标位置
+            position = Pointer.current.position.ReadValue() // 使用新的输入系统获取鼠标位置
         };
         List<RaycastResult> results = new List<RaycastResult>();
         EventSystem.current.RaycastAll(pointerData, results);

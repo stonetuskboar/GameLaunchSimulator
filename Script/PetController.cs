@@ -28,6 +28,7 @@ public class PetController : MonoBehaviour
     }
     public void ShowAtWithTextThenDisappear(Vector3 position, string text,float disappearTime)
     {
+        AudioManager.Instance.PlaySfxByName("PetMessage");
         PetText.text = text;
         rectTrans.position = position;
         StartShow();

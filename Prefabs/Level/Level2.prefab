@@ -170,7 +170,7 @@ MonoBehaviour:
   BlackScreenImage: {fileID: 7450646152725878904}
   gameImage: {fileID: 2676124198212798230}
   successImage: {fileID: 3076134439580820713}
-  blackScreenCanvas: {fileID: 1423889201791175149}
+  blackBackGroundCanvas: {fileID: 1423889201791175149}
   warnSo: {fileID: 11400000, guid: ab6609ce34eabc042afd2330a5e15d94, type: 2}
   warn: {fileID: 8410405199415299674}
   startSetting:
@@ -979,6 +979,10 @@ PrefabInstance:
     - target: {fileID: 7700945253516673359, guid: f9d122cbd7ced614e88a92437fc28f67, type: 3}
       propertyPath: m_Name
       value: ErrorWarning
+      objectReference: {fileID: 0}
+    - target: {fileID: 7700945253516673359, guid: f9d122cbd7ced614e88a92437fc28f67, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

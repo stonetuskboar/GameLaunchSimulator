@@ -268,7 +268,7 @@ MonoBehaviour:
     m_Left: 4
     m_Right: 4
     m_Top: 8
-    m_Bottom: 4
+    m_Bottom: 8
   m_ChildAlignment: 1
   m_Spacing: 8
   m_ChildForceExpandWidth: 0
@@ -334,7 +334,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c00da178566fc344b8cdf9ab8cac2773, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iconId: 0
+  appId: 0
   titleText: {fileID: 2664687680811110865}
   iconImage: {fileID: 374351721319083892}
   proertySetting:

@@ -10,15 +10,19 @@ public class DesktopManager : MonoBehaviour
     public RectTransform DesktopIconsRectTrans;
     public ClickMenu clickMenu;
     public Property property;
+    public TaskBar taskBar;
     public ExplorerManager explorerManager;
     public ChatManager chatManager;
-    private Application ChoosenTarget = null;
+    private App ClickMenuTarget = null;
+    private App NowClickTarget = null;
+    private int ClickCount = 0; //我讨厌unity，自带的eventdata.clickcount只支持鼠标点击，移动端点击只会返回1
+    private float clickLeftTime = 0;
     public float doubleClickTime = 0.5f;
     public static Vector3 safetyEdge = new Vector3(60,48,0);
     [Header("桌面应用管理")] //这里就不做对象池了，只有每关开头和结尾才会增加和删除应用，所以没有消耗性能的考虑
     public GameObject ApplicationPrefab;
     public ApplicationSo appSo;
-    public List<Application> applications = new List<Application>();
+    public List<App> applications = new List<App>();
 
     public void Awake() //这些引用都在awake之前。
     {
@@ -29,7 +33,27 @@ public class DesktopManager : MonoBehaviour
         //App数据由levelManager控制
     }
 
-    public Application IfNoExistAddApp(int id)
+    public void Update()
+    {
+        if (NowClickTarget != null)
+        {
+            if (clickLeftTime > 0)
+            {
+                clickLeftTime -= Time.deltaTime;
+            }
+            else
+            {
+                if(ClickCount == 2)
+                {
+                    NowClickTarget.OnLaunchInvoke();
+                }
+                StopClickCheck();
+            }
+        }
+    }
+
+
+    public App IfNoExistAddApp(int id)
     {
         for(int i = 0; i < applications.Count; i ++)
         {
@@ -38,6 +62,7 @@ public class DesktopManager : MonoBehaviour
                 return null;
             }
         }
+        AudioManager.Instance.PlaySfxByName("AddApp");
         return CreateAnApplication(id);
     }
     public void IfExistDeleteApp(int id)
@@ -51,11 +76,11 @@ public class DesktopManager : MonoBehaviour
             }
         }
     }
-    public void IfExistDeleteApp(Application app)
+    public void IfExistDeleteApp(App app)
     {
         applications.Remove(app);
     }
-    public Application GetApplicationById(int id)
+    public App GetApplicationById(int id)
     {
         if (applications.Count > id)
         {
@@ -75,11 +100,11 @@ public class DesktopManager : MonoBehaviour
         return null;
     }
 
-    public Application CreateAnApplication(int id)
+    public App CreateAnApplication(int id)
     {
         AppData data = appSo.GetAppDataById(id);
         GameObject obj = Instantiate(ApplicationPrefab,DesktopIconsRectTrans);
-        Application app = obj.GetComponent<Application>();
+        App app = obj.GetComponent<App>();
         if(app != null)
         {
             app.Init(this,data);
@@ -88,12 +113,51 @@ public class DesktopManager : MonoBehaviour
         return app;
     }
 
-
-
-
-    public void ShowClickMenu(Application clickTarget)
+    public App CreateAnApplication(AppData data)
     {
-        ChoosenTarget = clickTarget;
+        AudioManager.Instance.PlaySfxByName("AddApp");
+        GameObject obj = Instantiate(ApplicationPrefab, DesktopIconsRectTrans);
+        App app = obj.GetComponent<App>();
+        if (app != null)
+        {
+            app.Init(this, data);
+            applications.Add(app);
+        }
+        return app;
+    }
+
+    public void ClickCheck(App clickTarget)
+    {
+
+        if(NowClickTarget != clickTarget) //之前没有点击过
+        {
+            NowClickTarget = clickTarget;
+            ClickCount = 1;
+            clickLeftTime = doubleClickTime;
+        }
+        else if (ClickCount == 1) //双击一段时间后没有别的点击，则在update中判断为打开应用
+        {
+            ClickCount = 2;
+            if (clickLeftTime < (0.5f * doubleClickTime))
+            {
+                clickLeftTime = 0.5f * doubleClickTime;
+            }
+        }
+        else if (ClickCount == 2) //如果已经点击了两下，则触发第三击事件
+        {
+            ShowProperty(clickTarget);
+            StopClickCheck();
+        }
+    }
+    public void StopClickCheck()
+    {
+        NowClickTarget = null;
+        ClickCount = 0;
+    }
+    public void ShowClickMenu(App clickTarget)
+    {
+        AudioManager.Instance.PlaySfxByName("Open");
+        ClickMenuTarget = clickTarget;
         Vector3 TargetPosition = Camera.main.ScreenToWorldPoint((Vector3)Pointer.current.position.ReadValue());
         TargetPosition.z = 0;
         clickMenu.rectTrans.position = TargetPosition;
@@ -107,19 +171,27 @@ public class DesktopManager : MonoBehaviour
     }
     public void LaunchTarget()
     {
-        if(ChoosenTarget != null)
+        if(ClickMenuTarget != null)
         {
-           ChoosenTarget.OnLaunchInvoke();
+           ClickMenuTarget.OnLaunchInvoke();
         }
         CloseClickMenu();
     }
 
     public void ShowProperty()
     {
-        ShowProperty(ChoosenTarget);
+        if(ClickMenuTarget == null)
+        {
+            Debug.Log("你在没有ClickMenuTarget的情况下调用了此函数，检查检查代码。");
+        }
+        else
+        {
+            ShowProperty(ClickMenuTarget);
+        }
     }
-    public void ShowProperty(Application appTarget)
+    public void ShowProperty(App appTarget)
     {
+        AudioManager.Instance.PlaySfxByName("Open");
         CloseClickMenu();
         property.SetProperty(appTarget);
         Vector3 TargetPosition = Camera.main.ScreenToWorldPoint((Vector3)Pointer.current.position.ReadValue());
@@ -264,6 +336,14 @@ public class DesktopManager : MonoBehaviour
         //Vector3 bottomLeftDiff = new Vector3(rectrans.rect.x, rectrans.rect.y, 0); //必须将canvas scale 设置为1，1，1，不然要加转换
         //Vector3 topRightDiff = new Vector3(rectrans.rect.xMax, rectrans.rect.yMax, 0);
         Vector3 bottomLeftPosition = rectrans.position + new Vector3(rectrans.rect.xMax, rectrans.rect.yMax, 0);
+        return bottomLeftPosition;
+    }
+
+    public static Vector3 GetCentrePosition(RectTransform rectrans)
+    {
+        //Vector3 bottomLeftDiff = new Vector3(rectrans.rect.x, rectrans.rect.y, 0); //必须将canvas scale 设置为1，1，1，不然要加转换
+        //Vector3 topRightDiff = new Vector3(rectrans.rect.xMax, rectrans.rect.yMax, 0);
+        Vector3 bottomLeftPosition = rectrans.position + new Vector3((rectrans.rect.x + rectrans.rect.xMax)/2, (rectrans.rect.y + rectrans.rect.yMax)/2, 0);
         return bottomLeftPosition;
     }
 }

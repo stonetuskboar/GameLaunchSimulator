@@ -8,7 +8,7 @@ public class patchHomeController : MonoBehaviour
     public GameObject FilePrefab;
     public Transform FileLayoutTransform;
     public FileSo fileSo;
-    public List<控制器_下载按钮> fileList = new();
+    public List<FileObject> fileList = new();
     public 控制器_下载弹窗 downloadReminder;
 
     private void Start()
@@ -40,25 +40,25 @@ public class patchHomeController : MonoBehaviour
         }
     }
 
-    public 控制器_下载按钮 CreatePrefab(FileData data)
+    public FileObject CreatePrefab(FileData data)
     {
         if (data == null)
         {
             return null;
         }
-        控制器_下载按钮 file = CreatePrefab();
+        FileObject file = CreatePrefab();
         file.SetFile(data);
         return file;
     }
-    public 控制器_下载按钮 CreatePrefab()
+    public FileObject CreatePrefab()
     {
         GameObject obj = Instantiate(FilePrefab, FileLayoutTransform);
-        控制器_下载按钮 file = obj.GetComponent<控制器_下载按钮>();
+        FileObject file = obj.GetComponent<FileObject>();
         file.Init(this);
         return file;
     }
 
-    public bool 下载(FileData data, 控制器_下载按钮 file)
+    public bool 下载(FileData data, FileObject file)
     {
         if (downloadReminder.GetActive() == true)
         {
@@ -84,5 +84,13 @@ public class patchHomeController : MonoBehaviour
             }
         }
         return false;
+    }
+
+    public void AllClearToUndownload()
+    {
+        for( int i = 0;i < fileList.Count;i++)
+        {
+            fileList[i].ClearToUndownload();
+        }
     }
 }

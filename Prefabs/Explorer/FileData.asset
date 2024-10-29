@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fileDataList:
   - fileId: 0
-    fileSprite: {fileID: 21300000, guid: 01c3598287061064ea8761868aaba8ff, type: 3}
-    fileName: vcomp100.dll
-    fileSize: 7.54MB
+    fileSprite: {fileID: 21300000, guid: 8ab2f3db0cb168f4ca4b0ea0a8c84887, type: 3}
+    fileName: dllCleaner.exe
+    fileSize: 25.2MB
   - fileId: 1
     fileSprite: {fileID: 21300000, guid: 8ab2f3db0cb168f4ca4b0ea0a8c84887, type: 3}
     fileName: NVCleanstall.exe
@@ -38,9 +38,9 @@ MonoBehaviour:
     fileName: vcomp110.dll
     fileSize: 428.9KB
   - fileId: 6
-    fileSprite: {fileID: 21300000, guid: 01c3598287061064ea8761868aaba8ff, type: 3}
-    fileName: jhn0uhbo.dll
-    fileSize: 1.23MB
+    fileSprite: {fileID: 21300000, guid: 8ab2f3db0cb168f4ca4b0ea0a8c84887, type: 3}
+    fileName: vc_redist.x86.exe
+    fileSize: 23.3MB
   - fileId: 7
     fileSprite: {fileID: 21300000, guid: 01c3598287061064ea8761868aaba8ff, type: 3}
     fileName: mfc140.dll

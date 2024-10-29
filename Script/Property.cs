@@ -9,7 +9,7 @@ public class Property : LayeredCanvas
 {
 
     private DesktopManager deskManager;
-    private Application nowApplication = null;
+    private App nowApplication = null;
     public Image iconImage;
     public TextMeshProUGUI titleText;
     public RectTransform rectTrans; //用来在拖动窗口时移动
@@ -35,9 +35,7 @@ public class Property : LayeredCanvas
     public override void Awake()
     {
         base.Awake();
-        DecideButton.onClick.AddListener(ApplySettingThenUnShow);
-        CancelButton.onClick.AddListener(UnShow);
-        ApplyButton.onClick.AddListener (SaveSetting);
+        SettingButton();
 
         CompToggle.onValueChanged.AddListener(OnBoolChanged);
         ComDropDown.onValueChanged.AddListener(OnIntChanged);
@@ -65,7 +63,27 @@ public class Property : LayeredCanvas
         ApplyButton.interactable = false;
     }
 
-    public void SetProperty(Application app)
+    public void SettingButton()
+    {
+        DecideButton.onClick.RemoveAllListeners();
+        CancelButton.onClick.RemoveAllListeners();
+        ApplyButton.onClick.RemoveAllListeners();
+        DecideButton.onClick.AddListener(ApplySettingThenUnShow);
+        CancelButton.onClick.AddListener(UnShow);
+        ApplyButton.onClick.AddListener(SaveSetting);
+    }
+
+    public void SettingButtonForLevel4()
+    {
+        DecideButton.onClick.RemoveAllListeners();
+        CancelButton.onClick.RemoveAllListeners();
+        ApplyButton.onClick.RemoveAllListeners();
+        DecideButton.onClick.AddListener(UnShow);
+        CancelButton.onClick.AddListener(SaveSetting);
+        ApplyButton.onClick.AddListener(UnShow);
+    }
+
+    public void SetProperty(App app)
     {
         nowApplication = app;
         iconImage.sprite = app.iconImage.sprite;
@@ -140,6 +158,97 @@ public class PropertySetting
     public bool IsRunByAdmin;
     public bool IsReResgister;
     public bool IsIccMode;
+
+    public bool IsLevel4Equal(PropertySetting setting2)
+    {
+        if (IsCompatibility != setting2.IsCompatibility)
+        {
+            return false;
+        }
+        else if (IsCompatibility == false && compatMode != setting2.compatMode)
+        {
+            return false;
+        }
+
+        if (IsColorMode != setting2.IsColorMode)
+        {
+            return false;
+        }
+        else if (IsColorMode == false && colorMode != setting2.colorMode)
+        {
+            return false;
+        }
+
+        if (IsLowResolution != setting2.IsLowResolution)
+        {
+            return false;
+        }
+
+        if (IsfullScreenOptim != setting2.IsfullScreenOptim)
+        {
+            return false;
+        }
+
+        if (IsRunByAdmin != setting2.IsRunByAdmin)
+        {
+            return false;
+        }
+
+        if (IsReResgister != setting2.IsReResgister)
+        {
+            return false;
+        }
+        if (IsIccMode != setting2.IsIccMode)
+        {
+            return false;
+        }
+
+        return true;
+    }
+    public bool IsEqual(PropertySetting setting2)
+    {
+        if(IsCompatibility != setting2.IsCompatibility)
+        {
+            return false;
+        }else if( IsCompatibility == true && compatMode != setting2.compatMode)
+        {
+            return false;
+        }
+
+        if(IsColorMode != setting2.IsColorMode)
+        {
+            return false;
+        }else if(IsColorMode == true &&  colorMode != setting2.colorMode)
+        {
+            return false;
+        }
+        
+        if (IsLowResolution != setting2.IsLowResolution)
+        {
+            return false;
+        }
+
+        if( IsfullScreenOptim != setting2.IsfullScreenOptim)
+        {
+            return false;
+        }
+
+        if(IsRunByAdmin != setting2.IsRunByAdmin)
+        {
+            return false;
+        }
+
+        if(IsReResgister != setting2.IsReResgister)
+        {
+            return false;
+        }
+        if(IsIccMode != setting2.IsIccMode)
+        {
+            return false;
+        }
+
+        return true;
+    }
 
 }
 

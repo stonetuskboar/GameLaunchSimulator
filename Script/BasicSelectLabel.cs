@@ -24,7 +24,7 @@ public class BasicSelectLabel : MonoBehaviour,IPointerDownHandler,IPointerExitHa
         IsShow = false;
         ChangeTitleColor(UnShowTitleColor);
     }
-    public void ChangeTitleColor(Color color)
+    public virtual void ChangeTitleColor(Color color)
     {
         BackImage.color = color;
     }

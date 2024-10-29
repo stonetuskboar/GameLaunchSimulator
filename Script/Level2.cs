@@ -9,7 +9,7 @@ public class Level2 : BasicLevel
     public Image BlackScreenImage;
     public Image gameImage;
     public Image successImage;
-    public Canvas blackScreenCanvas;
+    public Canvas blackBackGroundCanvas;
     public WarnSo warnSo;
     public Warn warn;
     public PropertySetting startSetting;
@@ -20,14 +20,14 @@ public class Level2 : BasicLevel
     public override void Awake()
     {
         base.Awake();
+        Reset();
         warn.button.onClick.AddListener(Quit);
         completePlate.button.onClick.AddListener(OnCompleteLevel);
-        Reset();
     }
     public override void Init(LevelManager manger)
     {
         base.Init(manger);
-        blackScreenCanvas.worldCamera = Camera.main;
+        blackBackGroundCanvas.worldCamera = Camera.main;
         levelManager.explorerManager.ShowTiebaById(1);
         levelManager.chatManager.ShowChat();
         levelManager.chatManager.StartShowMessageSegment(2);
@@ -47,10 +47,10 @@ public class Level2 : BasicLevel
     }
     IEnumerator ShowBlackScreen()
     {
-        blackScreenCanvas.enabled = true;
-        CameraController controller = levelManager.cameraController;
+        blackBackGroundCanvas.enabled = true;
+        CameraController camController = levelManager.cameraController;
         canvas.enabled = true;
-        controller.MultiSizeFixedLeftTop(0.5f);
+        camController.MultiSizeFixedLeftTop(0.5f);
         yield return new WaitForSeconds(0.5f);
 
         if (CheckLevelSuccess() == false)
@@ -59,11 +59,11 @@ public class Level2 : BasicLevel
             yield return new WaitForSeconds(0.7f);
             gameImage.enabled = false;
             yield return new WaitForSeconds(0.3f);
-            controller.BackToOgSizeWhenFixedLeftTop();
+            camController.BackToOgSizeWhenFixedLeftTop();
 
             yield return new WaitForSeconds(0.2f);
 
-            controller.MultiSizeFixedLeftTop(2f);
+            camController.MultiSizeFixedLeftTop(2f);
 
             yield return new WaitForSeconds(0.5f);
             BlackScreenImage.enabled = true;
@@ -72,7 +72,7 @@ public class Level2 : BasicLevel
         }
         else
         {
-            controller.BackToOgSizeWhenFixedLeftTop();
+            camController.BackToOgSizeWhenFixedLeftTop();
             gameImage.enabled = true;
             yield return new WaitForSeconds(1f);
             Color color = successImage.color;
@@ -109,7 +109,7 @@ public class Level2 : BasicLevel
         successImage.enabled = false;
         gameImage.enabled = false;
         canvas.enabled = false;
-        blackScreenCanvas.enabled = false;
+        blackBackGroundCanvas.enabled = false;
         BlackScreenImage.enabled = false;
     }
     public override void OnCompleteLevel()
@@ -124,7 +124,7 @@ public class Level2 : BasicLevel
             warn.SetWarn(warnSo.WarnDatas[3]);
             return false;
         }
-        else if( setting.IsfullScreenOptim != false)
+        else if( setting.IsfullScreenOptim != CorrectSetting.IsfullScreenOptim)
         {
             warn.SetWarn(warnSo.WarnDatas[2]);
             return false;
@@ -132,7 +132,6 @@ public class Level2 : BasicLevel
         else {
             return true;
         }
-
     }
 
     public override void OnHyperLinkClick(string link)
@@ -140,7 +139,7 @@ public class Level2 : BasicLevel
         if (link == "aoe2" && CheckIfAppExist(3) == false)
         {
             AddApps();
-            Application app = GetAppById(3);
+            App app = GetAppById(3);
             app.LaunchAddListener(LaunchGame);
             warn.Init(app);
             GetFirstApp().proertySetting = startSetting;

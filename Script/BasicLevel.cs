@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.PackageManager;
 using UnityEngine;
 
 public class BasicLevel : MonoBehaviour
@@ -13,31 +12,38 @@ public class BasicLevel : MonoBehaviour
     public List<int> ApplistId = new List<int>();
     public CompletePlate completePlate;
     public List<ContentIcon> contentIcons;
-    private List<Application> appList = new List<Application>();
+    private List<App> appList = new List<App>();
 
     public virtual void Awake()
     {
-        canvas.worldCamera = Camera.main;
+        if(canvas != null)
+        {
+            canvas.worldCamera = Camera.main;
+        }
+
     }
     public virtual void Init(LevelManager manger) //Init在levelmanager的start中启动
     {
         levelManager = manger;
     }
 
-
+    public void AddApp(App app)
+    {
+        appList.Add(app);
+    }
 
     public virtual void AddApps()
     {
         for (int i = 0; i < ApplistId.Count; i++)
         {
-            Application app = levelManager.deskManager.IfNoExistAddApp(ApplistId[i]);
+            App app = levelManager.deskManager.IfNoExistAddApp(ApplistId[i]);
             if(app != null)
             {
                 appList.Add(app);
             }
         }
     }
-    public Application GetFirstApp()
+    public App GetFirstApp()
     {
         if (appList.Count > 0)
         {
@@ -49,7 +55,7 @@ public class BasicLevel : MonoBehaviour
             return null;
         }
     }
-    public Application GetAppById(int id)
+    public App GetAppById(int id)
     {
         for( int i = 0;i < appList.Count;i++)
         {
@@ -65,11 +71,11 @@ public class BasicLevel : MonoBehaviour
         yield return new WaitForSeconds(waitTime);
         levelManager.petController.ShowAtWithTextThenDisappear(position, str, appearTime);
     }
-    public Application AddFirstApp()
+    public App AddFirstApp()
     {
         if(ApplistId.Count > 0)
         {
-            Application app = levelManager.deskManager.IfNoExistAddApp(ApplistId[0]);
+            App app = levelManager.deskManager.IfNoExistAddApp(ApplistId[0]);
             appList.Add(app);
             return app;
         }
@@ -92,7 +98,10 @@ public class BasicLevel : MonoBehaviour
     public virtual void OnCompleteLevel()
     {
     }
-
+    public LevelManager GetLevelManager()
+    {
+        return levelManager;
+    }
     public virtual void DestroyLevel()
     {
         levelManager.explorerManager.explorerController.ClearExplorer();
@@ -111,6 +120,8 @@ public class BasicLevel : MonoBehaviour
         for (int i = 0; i < appList.Count; i++)
         {
             appList[i].DestroyThis();
+            appList.RemoveAt(i);
+            i--;
         }
     }
 

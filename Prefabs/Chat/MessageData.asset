@@ -25,9 +25,9 @@ MonoBehaviour:
   - FriendId: 3
     AvatarSprite: {fileID: 21300000, guid: cdc62f5633949b244b0daa0d7575cb91, type: 3}
     Name: "\u718A\u732B\u70E7\u70E4"
-  - FriendId: 3
-    AvatarSprite: {fileID: 21300000, guid: 366881d27e43ae646a262596575e90bc, type: 3}
-    Name: "\u5F20\u53D4\u53D4"
+  - FriendId: 4
+    AvatarSprite: {fileID: 21300000, guid: 9c8362f2058efd64391970b6a3487549, type: 3}
+    Name: "\u5F20\u53D4"
   PlayerData:
     FriendId: -1
     AvatarSprite: {fileID: 21300000, guid: f1f39a2bcb783bd4ba951aaa8dd16777, type: 3}
@@ -40,7 +40,7 @@ MonoBehaviour:
     - replyId: 0
       messageId: 1
       nextSegmentId: 1
-    - replyId: 0
+    - replyId: 1
       messageId: 18
       nextSegmentId: 1
   - SegmentId: 1
@@ -62,9 +62,15 @@ MonoBehaviour:
     messageIdList: 0c0000000d0000000e0000000f000000
     replyList: []
   - SegmentId: 4
-    FriendId: 2
-    messageIdList: 13000000
-    replyList: []
+    FriendId: 4
+    messageIdList: 13000000140000001500000016000000
+    replyList:
+    - replyId: 4
+      messageId: 23
+      nextSegmentId: 10
+    - replyId: 5
+      messageId: 24
+      nextSegmentId: 10
   - SegmentId: 5
     FriendId: 0
     messageIdList: 1e000000
@@ -73,15 +79,107 @@ MonoBehaviour:
     FriendId: 3
     messageIdList: 1f0000002000000021000000
     replyList:
-    - replyId: 4
+    - replyId: 6
       messageId: 34
       nextSegmentId: -1
-    - replyId: 5
+    - replyId: 7
       messageId: 35
       nextSegmentId: -1
-    - replyId: 6
+    - replyId: 8
       messageId: 36
       nextSegmentId: -1
+  - SegmentId: 7
+    FriendId: 2
+    messageIdList: 26000000
+    replyList:
+    - replyId: 9
+      messageId: 39
+      nextSegmentId: 8
+    - replyId: 10
+      messageId: 40
+      nextSegmentId: 8
+  - SegmentId: 8
+    FriendId: 2
+    messageIdList: 290000002a0000002b0000002c000000
+    replyList: []
+  - SegmentId: 9
+    FriendId: 3
+    messageIdList: 500000005000000050000000
+    replyList: []
+  - SegmentId: 10
+    FriendId: 4
+    messageIdList: 190000001a0000001b0000001c0000001d000000
+    replyList: []
+  - SegmentId: 11
+    FriendId: 2
+    messageIdList: 2d0000002e0000002f000000300000003100000032000000
+    replyList:
+    - replyId: 11
+      messageId: 51
+      nextSegmentId: 12
+    - replyId: 12
+      messageId: 52
+      nextSegmentId: 13
+  - SegmentId: 12
+    FriendId: 2
+    messageIdList: 3500000036000000
+    replyList: []
+  - SegmentId: 13
+    FriendId: 2
+    messageIdList: 3700000038000000
+    replyList: []
+  - SegmentId: 14
+    FriendId: 4
+    messageIdList: 390000003a000000
+    replyList:
+    - replyId: 13
+      messageId: 59
+      nextSegmentId: 15
+    - replyId: 14
+      messageId: 60
+      nextSegmentId: 15
+  - SegmentId: 15
+    FriendId: 4
+    messageIdList: 3d0000003e0000003f000000
+    replyList:
+    - replyId: 15
+      messageId: 64
+      nextSegmentId: 16
+    - replyId: 16
+      messageId: 65
+      nextSegmentId: 17
+  - SegmentId: 16
+    FriendId: 4
+    messageIdList: 4500000046000000
+    replyList: []
+  - SegmentId: 17
+    FriendId: 4
+    messageIdList: 4200000043000000440000004500000046000000
+    replyList: []
+  - SegmentId: 18
+    FriendId: 0
+    messageIdList: 4700000048000000490000004a000000
+    replyList:
+    - replyId: 17
+      messageId: 75
+      nextSegmentId: 19
+    - replyId: 18
+      messageId: 76
+      nextSegmentId: 20
+  - SegmentId: 19
+    FriendId: 0
+    messageIdList: 4f000000
+    replyList: []
+  - SegmentId: 20
+    FriendId: 0
+    messageIdList: 4d000000
+    replyList:
+    - replyId: 17
+      messageId: 75
+      nextSegmentId: 19
+    - replyId: 19
+      messageId: 78
+      nextSegmentId: 20
   messageList:
   - messageId: 0
     IsSend: 0
@@ -143,7 +241,37 @@ MonoBehaviour:
     text: "\u600E\u4E48\u5566\uFF1F"
   - messageId: 19
     IsSend: 0
-    text: "\u6211\u592A\u61D2\u4E86\uFF0C\u4E0D\u60F3\u5199\u5BF9\u8BDD\u3002<br>    
+    text: "\u5C0F\u4F19\u5B50\u4F60\u597D"
+  - messageId: 20
+    IsSend: 0
+    text: "\u6211\u662F\u4F60\u5F20\u53D4"
+  - messageId: 21
+    IsSend: 1
+    text: "\u5F20\u53D4\u597D"
+  - messageId: 22
+    IsSend: 0
+    text: "\u6211\u542C\u4EBA\u8BF4\uFF0C\u4F60\u662F\u8BA1\u7B97\u673A\u4E13\u4E1A\u7684\uFF0C\u80FD\u5E2E\u5FD9\u8C03\u8BD5\u6E38\u620F\uFF1F"
+  - messageId: 23
+    IsSend: 1
+    text: "\u597D\u554A\uFF0C\u6211\u53EF\u4EE5\u7684\u3002"
+  - messageId: 24
+    IsSend: 1
+    text: "\u867D\u7136\u4E0D\u662F\u8FD9\u4E2A\u903B\u8F91\u2026\u2026\u4F46\u6211\u53EF\u4EE5\u3002"
+  - messageId: 25
+    IsSend: 0
+    text: "\u6211\u6709\u4E2A\u4E00\u76F4\u73A9\u7684\u6E38\u620F\uFF0C\u53EB\u4F5C\u5F02\u5C18\u4F59\u751F3\uFF0C\u5C0F\u4F19\u5B50\u4F60\u542C\u8FC7\u6CA1\uFF1F"
+  - messageId: 26
+    IsSend: 1
+    text: "\u6211\u542C\u8FC7\u554A\uFF0C\u5C0F\u65F6\u5019\u8FD8\u73A9\u8FC7\uFF01"
+  - messageId: 27
+    IsSend: 1
+    text: "\u53D4\uFF0C\u4F60\u628A\u6E38\u620F\u53D1\u7ED9\u6211\uFF0C\u6211\u7ED9\u4F60\u89E3\u51B3\u3002"
+  - messageId: 28
+    IsSend: 0
+    text: "\u8C22\u8C22\u4F60\u554A\uFF0C\u5E74\u8F7B\u4EBA\uFF0C\u6211\u8FD9\u5C31\u53D1\u7ED9\u4F60\u3002"
+  - messageId: 29
+    IsSend: 0
+    text: "\u5C0F\u5FC3\u70B9\u554A\uFF0C\u8FD9\u6E38\u620F\u6545\u969C\u633A\u591A\u3002<br>  
       <link=\"fo3\"><size=72><sprite index= 0></size> <br><color=#CBCBCB>\u5F02\u5C18\u4F59\u751F3.zip</color></link>"
   - messageId: 30
     IsSend: 0
@@ -151,13 +279,13 @@ MonoBehaviour:
       <br><color=#CBCBCB>\u62A2\u6EE9\u4E0B\u6D772000.zip.exe</color></link>"
   - messageId: 31
     IsSend: 0
-    text: "\u4EBA\u7C7B\uFF0C\u4F60\u7684\u7535\u8111\u5DF2\u7ECF\u88AB\u611F\u67D3\u4E86\u3002"
+    text: "<color=#DF2020>\u4EBA\u7C7B\uFF0C\u4F60\u7684\u7535\u8111\u5DF2\u7ECF\u88AB\u611F\u67D3\u4E86\u3002"
   - messageId: 32
     IsSend: 0
-    text: "\u4ECE\u73B0\u5728\u8D77\uFF0C\u4F60\u5C06\u53EA\u80FD\u770B\u5230\u4E71\u7801\uFF01"
+    text: "<color=#DF2020>\u4ECE\u73B0\u5728\u8D77\uFF0C\u4F60\u5C06\u53EA\u80FD\u770B\u5230\u4E71\u7801\uFF01"
   - messageId: 33
     IsSend: 0
-    text: "\u67F7\u6CB5\u604F\u904B"
+    text: "<color=#DF2020>\u67F7\u6CB5\u604F\u904B"
   - messageId: 34
     IsSend: 1
     text: "\u9422\u8FA8\u6E40\u7455\u4F78\u30BD\u6FC2\u85C9\u6D94\u72B2\u3049\u6FB6\u2541\u609C\u6D93?"
@@ -170,3 +298,135 @@ MonoBehaviour:
   - messageId: 37
     IsSend: 1
     text: "\u597D\u5427"
+  - messageId: 38
+    IsSend: 0
+    text: "\u54E5\uFF0C\u518D\u5E2E\u5E2E\u6211\u5427"
+  - messageId: 39
+    IsSend: 1
+    text: "\u8BF4\u5427"
+  - messageId: 40
+    IsSend: 1
+    text: "\u6E38\u620F\u51FA\u95EE\u9898\u4E86\uFF1F"
+  - messageId: 41
+    IsSend: 0
+    text: "\u8FD8\u662F\u90A3\u4E2A\u6E38\u620F\uFF0C\u524D\u51E0\u5929\u6211\u7535\u8111\u4E2D\u75C5\u6BD2\u4E86\uFF0C\u8D44\u6599\u5168\u6CA1\u4E86"
+  - messageId: 42
+    IsSend: 0
+    text: "\u5305\u62EC\u738B\u56FD\u65F6\u4EE32\uFF0C\u6211\u8FD8\u6CA1\u73A9\u51E0\u5173\u5462"
+  - messageId: 43
+    IsSend: 1
+    text: "\u597D\uFF0C\u6211\u518D\u5E2E\u4F60\u8C03\u4E00\u904D\uFF0C\u53D1\u7ED9\u6211\u5427"
+  - messageId: 44
+    IsSend: 0
+    text: "\u8C22\u5566\uFF01<br>       <link=\"aoe2Virus\"><size=72><sprite index=
+      0></size> <br><color=#CBCBCB>\u738B\u56FD\u65F6\u4EE32.zip.exe</color></link>"
+  - messageId: 45
+    IsSend: 0
+    text: "\u54E5\uFF0C\u4F60\u8FD8\u597D\u5417\uFF1F"
+  - messageId: 46
+    IsSend: 0
+    text: "\u524D\u4E00\u9635\u90A3\u6CE2\u75C5\u6BD2\uFF0C\u542C\u8BF4\u611F\u67D3\u4E86\u597D\u591A\u7535\u8111\u4E86\u3002"
+  - messageId: 47
+    IsSend: 1
+    text: "\u522B\u63D0\u4E86\uFF0C\u6211\u7535\u8111\u5168\u53D8\u4E71\u7801\u4E86\uFF0C\u5C31\u8FDE\u6E38\u620F\u90FD\u662F\u4E71\u7801\u3002"
+  - messageId: 48
+    IsSend: 1
+    text: "\u597D\u5728\u6CA1\u7834\u574F\u522B\u7684\u4E1C\u897F\uFF0C\u73B0\u5728\u7EC8\u4E8E\u4FEE\u597D\u4E86\u3002"
+  - messageId: 49
+    IsSend: 1
+    text: "\u4F60\u627E\u6211\u5E72\u561B\uFF1F\u96BE\u9053\u2026\u2026"
+  - messageId: 50
+    IsSend: 0
+    text: "\u54E5\u2026\u2026\u5E2E\u6211\u770B\u770B\u6211\u6E38\u620F\u548B\u6253\u4E0D\u5F00\u4E86\u3002"
+  - messageId: 51
+    IsSend: 1
+    text: "\u53EF\u522B\u53C8\u4F20\u75C5\u6BD2\u8FC7\u6765"
+  - messageId: 52
+    IsSend: 1
+    text: "\u4E4B\u540E\u4F60\u5F97\u8BF7\u6211\u5403\u996D\u3002"
+  - messageId: 53
+    IsSend: 0
+    text: "\u80AF\u5B9A\u4E0D\u4F1A\uFF0C\u6211\u957F\u8BB0\u6027\u4E86"
+  - messageId: 54
+    IsSend: 0
+    text: "        <link=\"assassin\"><size=72><sprite index= 0></size> <br><color=#CBCBCB>\u5251\u5BA2\u4FE1\u6761
+      \u960E\u738B\u6BBF.zip</color></link>"
+  - messageId: 55
+    IsSend: 0
+    text: "\u90A3\u80AF\u5B9A\u554A\u3002\u4E00\u5B9A\u5F97\u8BF7\u4F60\u5403\u3002"
+  - messageId: 56
+    IsSend: 0
+    text: "        <link=\"assassin\"><size=72><sprite index= 0></size> <br><color=#CBCBCB>\u5251\u5BA2\u4FE1\u6761
+      \u960E\u738B\u6BBF.zip</color></link>"
+  - messageId: 57
+    IsSend: 0
+    text: "\u5C0F\u4F19\u5B50\u554A\uFF0C\u6700\u8FD1\u6709\u65F6\u95F4\u5417\uFF1F"
+  - messageId: 58
+    IsSend: 0
+    text: "\u53D4\u53C8\u5F97\u9EBB\u70E6\u4F60\u4E86\u3002\u8FD8\u662F\u4E4B\u524D\u90A3\u4E2A\u6E38\u620F\u3002"
+  - messageId: 59
+    IsSend: 1
+    text: "\u53D4\u4F60\u8BF4\uFF0C\u6211\u73B0\u5728\u5C31\u6709\u7A7A\u3002"
+  - messageId: 60
+    IsSend: 1
+    text: "\u6211\u5728\u5462\u3002"
+  - messageId: 61
+    IsSend: 0
+    text: "\u4F60\u7ED9\u6211\u8C03\u4E86\u540E\uFF0C\u662F\u80FD\u6253\u5F00\u73A9\u4E86"
+  - messageId: 62
+    IsSend: 0
+    text: "\u53EF\u662F\u73A9\u5230\u4E00\u534A\uFF0C\u4E00\u505A\u67D0\u4E2A\u4EFB\u52A1\u5C31\u84DD\u5C4F\u4E86\uFF0C\u600E\u4E48\u4E5F\u8FC7\u4E0D\u53BB"
+  - messageId: 63
+    IsSend: 0
+    text: "\u6211\u5F53\u5E74\u73A9\u7684\u65F6\u5019\u6545\u969C\u4E5F\u591A\uFF0C\u53EF\u4E0D\u8BB0\u5F97\u8FD9\u5173\u51FA\u8FC7\u6545\u969C\uFF0C\u5C0F\u4F19\u5B50\uFF0C\u4F60\u5E2E\u6211\u770B\u770B\u5427"
+  - messageId: 64
+    IsSend: 1
+    text: "\u884C\u554A\u53D4\uFF0C\u80AF\u5B9A\u7684\uFF0C\u4F60\u73B0\u5728\u53D1\u6211\u5427"
+  - messageId: 65
+    IsSend: 1
+    text: "\u53D4\uFF0C\u6211\u591A\u5634\u95EE\u4E0B\uFF0C\u4F60\u4E3A\u5565\u73B0\u5728\u8FD8\u8FD9\u4E48\u559C\u6B22\u6E38\u620F\uFF1F"
+  - messageId: 66
+    IsSend: 0
+    text: "\u54E6\uFF0C\u4F60\u95EE\u8FD9\u4E2A\u554A"
+  - messageId: 67
+    IsSend: 0
+    text: "\u53D4\u4E5F\u5E74\u8F7B\u8FC7"
+  - messageId: 68
+    IsSend: 0
+    text: "\u6709\u65F6\u5019\u7D2F\u4E86\uFF0C\u4E0D\u5F00\u5FC3\u4E86\uFF0C\u53D4\u5C31\u73A9\u4E00\u73A9\u6E38\u620F\uFF0C\u73A9\u6E38\u620F\u53EA\u8D39\u7535\uFF0C\u591A\u5065\u5EB7\u554A"
+  - messageId: 69
+    IsSend: 0
+    text: "\u4F60\u518D\u7ED9\u53D4\u8C03\u4E00\u904D\u5427\uFF0C\u8C22\u8C22\u4F60\u5566\u3002"
+  - messageId: 70
+    IsSend: 0
+    text: "   <link=\"fo3\"><size=72><sprite index= 0></size> <br><color=#CBCBCB>\u5F02\u5C18\u4F59\u751F3.zip</color></link>"
+  - messageId: 71
+    IsSend: 0
+    text: "\u5728\u5417\uFF0C\u518D\u5E2E\u6211\u8C03\u4E2A\u6E38\u620F\u5427\uFF0C\u5361\u52A0\u8F7D\u5566\uFF01"
+  - messageId: 72
+    IsSend: 1
+    text: "\u6211\u53BB\uFF0C\u5C31\u662F\u4E0A\u6B21\u4F60\u53D1\u7684\u6587\u4EF6\u5BB3\u6211\u4E2D\u6BD2\u4E86\u3002"
+  - messageId: 73
+    IsSend: 1
+    text: "\u4F60\u8FD9\u6B21\u53C8\u60F3\u7ED9\u6211\u53D1\u5565\uFF1F"
+  - messageId: 74
+    IsSend: 0
+    text: "\u597D\u54E5\u54E5\u554A\uFF0C\u4F60\u548B\u8FD8\u8BB0\u7740\u75C5\u6BD2\u90A3\u4E2A\u4E8B\u5462\uFF0C\u6211\u4E5F\u662F\u88AB\u4F20\u67D3\u7684\u3002\u8FD9\u6B21\u7EDD\u5BF9\u6CA1\u75C5\u6BD2\u3002"
+  - messageId: 75
+    IsSend: 1
+    text: "\u597D\uFF0C\u53D1\u8FC7\u6765\u5427\u3002"
+  - messageId: 76
+    IsSend: 1
+    text: "\u4F60\u4FDD\u8BC1\u6CA1\u75C5\u6BD2\uFF1F"
+  - messageId: 77
+    IsSend: 0
+    text: "\u54E5\uFF0C\u6211\u4FDD\u8BC1\u8FD9\u6B21\u6CA1\u75C5\u6BD2\u4E86\u3002"
+  - messageId: 78
+    IsSend: 1
+    text: "\u4E0D\u884C\uFF0C\u4F60\u5F97\u518D\u4FDD\u8BC1\u3002"
+  - messageId: 79
+    IsSend: 0
+    text: "     <link=\"CitySkyline2\"><size=72><sprite index= 0></size> <br><color=#CBCBCB>\u57CE\u4E61\u7ED3\u5408\u90E82.zip</color></link>"
+  - messageId: 80
+    IsSend: 0
+    text: "<color=#DF2020>\u4F60\u597D\uFF01"

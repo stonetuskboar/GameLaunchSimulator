@@ -91,6 +91,7 @@ public class ExplorerController : LayeredCanvas
         {
             existWebpages[i].Clear();
             existWebpages.RemoveAt(i);
+            i--;
         }
     }
 }
